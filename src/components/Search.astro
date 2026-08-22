@@ -1,0 +1,143 @@
+---
+/* Full-site search. Pagefind index is generated post-build (`npm run build`),
+   so in `astro dev` the dialog shows a hint instead of results. */
+---
+
+<button type="button" class="search-trigger" data-search-open aria-label="Search the site">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2"/><path d="m15.2 15.2 4.4 4.4" stroke-linecap="round"/></svg>
+  <span class="search-trigger__label">Search</span>
+  <kbd>/</kbd>
+</button>
+
+<dialog class="search-dialog" data-search-dialog aria-label="Search">
+  <div class="search-dialog__head">
+    <span class="eyebrow" style="margin:0">Search</span>
+    <button type="button" data-search-close aria-label="Close search">esc</button>
+  </div>
+  <div id="pagefind" data-search-mount></div>
+  <p class="search-dialog__hint" data-search-hint hidden>
+    Search index is built with <code>npm run build</code>. It is not available in dev mode.
+  </p>
+</dialog>
+
+<style>
+  .search-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.34rem 0.6rem 0.34rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-sunken);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .search-trigger:hover { border-color: var(--line-strong); color: var(--ink); }
+  .search-trigger svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+  .search-trigger kbd {
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 0 0.32rem;
+    font-size: 0.68rem;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+  @media (max-width: 800px) {
+    .search-trigger__label, .search-trigger kbd { display: none; }
+    .search-trigger { padding: 0.4rem; }
+  }
+
+  .search-dialog {
+    width: min(680px, calc(100vw - 2rem));
+    max-height: min(76vh, 720px);
+    margin: 8vh auto auto;
+    padding: var(--space-3);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elev);
+    color: var(--ink);
+    box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.55);
+    overflow: auto;
+  }
+  .search-dialog::backdrop {
+    background: color-mix(in oklab, var(--bg-sunken) 72%, transparent);
+    backdrop-filter: blur(3px);
+  }
+  .search-dialog[open] { animation: pop 0.24s var(--ease) both; }
+  @keyframes pop { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+  .search-dialog__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-2);
+  }
+  .search-dialog__head button {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 0.15rem 0.55rem;
+    cursor: pointer;
+  }
+  .search-dialog__hint { color: var(--muted); font-size: var(--step--1); }
+
+  #pagefind {
+    --pagefind-ui-scale: 0.85;
+    --pagefind-ui-primary: var(--accent-ink);
+    --pagefind-ui-text: var(--ink);
+    --pagefind-ui-background: var(--bg-elev);
+    --pagefind-ui-border: var(--line);
+    --pagefind-ui-tag: var(--bg-sunken);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 8px;
+    --pagefind-ui-font: var(--font-body);
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const dialog = document.querySelector('[data-search-dialog]');
+    if (!dialog) return;
+    const hint = dialog.querySelector('[data-search-hint]');
+    let loaded = false;
+
+    const boot = async () => {
+      if (loaded) return;
+      loaded = true;
+      try {
+        const css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = '/pagefind/pagefind-ui.css';
+        document.head.appendChild(css);
+        const { PagefindUI } = await import('/pagefind/pagefind-ui.js');
+        new PagefindUI({ element: '#pagefind', showSubResults: true, showImages: false });
+      } catch {
+        hint.hidden = false;
+      }
+    };
+
+    const open = async () => {
+      if (!dialog.open) dialog.showModal();
+      await boot();
+      dialog.querySelector('input')?.focus();
+    };
+
+    document.querySelectorAll('[data-search-open]').forEach((b) => b.addEventListener('click', open));
+    dialog.querySelector('[data-search-close]').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+
+    document.addEventListener('keydown', (e) => {
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '');
+      if ((e.key === '/' && !typing) || (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey))) {
+        e.preventDefault();
+        open();
+      }
+    });
+  })();
+</script>

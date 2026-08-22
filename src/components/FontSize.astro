@@ -1,0 +1,79 @@
+---
+/* Reading-size control. Writes --font-scale on <html>, persisted. */
+---
+
+<div class="fontsize" role="group" aria-label="Reading size">
+  <button type="button" data-font-step="-1" aria-label="Smaller text">A</button>
+  <span class="value" data-font-label>100%</span>
+  <button type="button" data-font-step="1" aria-label="Larger text" class="big">A</button>
+</div>
+
+<style>
+  .fontsize {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 3px 4px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-sunken);
+  }
+  .fontsize button {
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    line-height: 1;
+    transition: color 0.2s var(--ease), background 0.2s var(--ease);
+  }
+  .fontsize button.big { font-size: 1.05rem; }
+  .fontsize button:hover { color: var(--ink); background: var(--bg-elev); }
+  .fontsize button[disabled] { opacity: 0.35; cursor: not-allowed; }
+  .value {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    color: var(--muted);
+    min-width: 3.1em;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const steps = [0.875, 1, 1.125, 1.25];
+    const root = document.documentElement;
+    const wrap = document.querySelector('.fontsize');
+    if (!wrap) return;
+    const label = wrap.querySelector('[data-font-label]');
+    const [minus, , plus] = [...wrap.children];
+
+    let i = 1;
+    try {
+      const stored = Number(localStorage.getItem('font-scale'));
+      const found = steps.indexOf(stored);
+      if (found > -1) i = found;
+    } catch {}
+
+    const render = () => {
+      root.style.setProperty('--font-scale', String(steps[i]));
+      label.textContent = Math.round(steps[i] * 100) + '%';
+      minus.disabled = i === 0;
+      plus.disabled = i === steps.length - 1;
+      try { localStorage.setItem('font-scale', String(steps[i])); } catch {}
+    };
+    render();
+
+    wrap.querySelectorAll('button').forEach((b) =>
+      b.addEventListener('click', () => {
+        i = Math.min(steps.length - 1, Math.max(0, i + Number(b.dataset.fontStep)));
+        render();
+      })
+    );
+  })();
+</script>

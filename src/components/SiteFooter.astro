@@ -1,0 +1,46 @@
+---
+import { site } from '../site';
+const year = new Date().getFullYear();
+---
+
+<footer class="ftr">
+  <div class="shell ftr__inner">
+    <div>
+      <p class="ftr__name">{site.name}</p>
+      <p class="ftr__meta">{site.location}</p>
+    </div>
+
+    <nav class="ftr__links" aria-label="Elsewhere">
+      {site.socials.map((s) => <a href={s.href} rel="me noopener">{s.label}</a>)}
+      <a href="/rss.xml">RSS</a>
+    </nav>
+
+    <p class="ftr__legal">© {year} · Built with Astro · <a href="https://github.com/anandmnair/anandmnair.github.io">Source</a></p>
+  </div>
+</footer>
+
+<style>
+  .ftr { margin-top: var(--space-6); border-top: 1px solid var(--line); background: var(--bg-sunken); }
+  .ftr__inner {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    padding: var(--space-4) 0 var(--space-5);
+  }
+  .ftr__name { font-family: var(--font-display); font-size: var(--step-1); margin: 0; }
+  .ftr__meta { color: var(--muted); font-size: var(--step--1); margin: 0.1rem 0 0; }
+  .ftr__links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; font-size: 0.88rem; }
+  .ftr__legal {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  @media (max-width: 640px) {
+    .ftr__inner { grid-template-columns: 1fr; }
+  }
+</style>

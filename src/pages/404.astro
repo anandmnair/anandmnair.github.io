@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Not found" description="That page does not exist.">
+  <div class="shell nf">
+    <p class="eyebrow">HTTP 404</p>
+    <h1 class="nf__code">404</h1>
+    <p class="lede">That page is not here. It may have moved, or it may never have existed.</p>
+    <p class="nf__links">
+      <a class="btn btn--primary" href="/">Home</a>
+      <a class="btn" href="/blog/">Writing</a>
+      <button class="btn" type="button" data-search-open>Search</button>
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .nf { padding: var(--space-6) 0; max-width: var(--measure); }
+  .nf__code {
+    font-size: clamp(5rem, 22vw, 12rem);
+    line-height: 0.85;
+    font-variation-settings: 'SOFT' 60, 'WONK' 1, 'opsz' 144;
+    color: var(--accent);
+    margin: 0 0 var(--space-3);
+  }
+  .nf__links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: var(--space-4); }
+  .nf__links button { font-family: var(--font-mono); cursor: pointer; }
+</style>

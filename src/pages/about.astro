@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../site';
+
+/* TODO — replace every string below with your own. */
+const facts = [
+  ['Focus', 'TODO — e.g. distributed systems, hexagonal architecture, developer platforms'],
+  ['Stack', 'TODO — e.g. Java 21, Spring Boot, Kafka, PostgreSQL, Kubernetes'],
+  ['Based in', site.location],
+  ['Open to', 'TODO — consulting, speaking, code review, nothing at all'],
+];
+---
+
+<BaseLayout title="About" description="Who I am, what I work on, and how to reach me.">
+  <div class="shell page">
+    <header class="page__head reveal">
+      <p class="eyebrow">About</p>
+      <h1>{site.name}</h1>
+      <p class="lede">{site.role}</p>
+    </header>
+
+    <div class="cols">
+      <div class="prose reveal">
+        <p>TODO — the long version. Where you started, what you have shipped, and what you care about as an engineer.</p>
+        <p>TODO — a second paragraph. The kinds of problems you enjoy, how you like to work, what you are trying to get better at.</p>
+
+        <h2>How I work</h2>
+        <ul>
+          <li>TODO — a principle you actually follow.</li>
+          <li>TODO — another one.</li>
+          <li>TODO — a third.</li>
+        </ul>
+
+        <h2>Beyond the keyboard</h2>
+        <p>TODO — a short human paragraph so the page is not only a résumé.</p>
+      </div>
+
+      <aside class="side reveal">
+        <dl class="facts">
+          {facts.map(([k, v]) => (
+            <div class="facts__row">
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <div class="side__links">
+          {site.socials.map((s) => <a class="btn" href={s.href} rel="me noopener">{s.label}</a>)}
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page { padding: var(--space-5) 0 0; }
+  .page__head { max-width: var(--measure); margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--line); }
+  .cols { display: grid; grid-template-columns: minmax(0, 1fr) 17rem; gap: var(--space-5); align-items: start; }
+  .side { position: sticky; top: 5.5rem; display: grid; gap: var(--space-3); }
+  .facts { margin: 0; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-elev); padding: var(--space-3); display: grid; gap: var(--space-2); }
+  .facts__row { display: grid; gap: 0.15rem; }
+  .facts dt { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .facts dd { margin: 0; font-size: var(--step--1); color: var(--ink-soft); }
+  .side__links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  @media (max-width: 900px) {
+    .cols { grid-template-columns: minmax(0, 1fr); }
+    .side { position: static; }
+  }
+</style>

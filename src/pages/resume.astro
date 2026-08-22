@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../site';
+
+const roles = (await getCollection('resume')).sort((a, b) => a.data.order - b.data.order);
+const rendered = await Promise.all(
+  roles.map(async (entry) => ({ entry, Content: (await render(entry)).Content }))
+);
+---
+
+<BaseLayout title="Résumé" description={`Career history for ${site.name}.`}>
+  <div class="shell page">
+    <header class="page__head reveal">
+      <p class="eyebrow">Résumé</p>
+      <h1>Career</h1>
+      <p class="lede">TODO — one line summarising your track record.</p>
+      <p class="page__actions">
+        <a class="btn" href="/cv.pdf">Download PDF</a>
+        <a class="btn" href={`mailto:${site.email}`}>Email me</a>
+      </p>
+    </header>
+
+    <ol class="timeline reveal">
+      {rendered.map(({ entry, Content }) => (
+        <li class="tl">
+          <div class="tl__when">
+            <span>{entry.data.start} — {entry.data.end}</span>
+          </div>
+          <div class="tl__what">
+            <h2 class="tl__role">{entry.data.role}</h2>
+            <p class="tl__org">
+              {entry.data.org}{entry.data.location ? ` · ${entry.data.location}` : ''}
+            </p>
+            <div class="prose tl__body"><Content /></div>
+            {entry.data.stack.length > 0 && (
+              <div class="tl__stack">{entry.data.stack.map((s) => <span class="tag">{s}</span>)}</div>
+            )}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</BaseLayout>
+
+<style>
+  .page { padding: var(--space-5) 0 0; }
+  .page__head { max-width: var(--measure); margin-bottom: var(--space-5); }
+  .page__actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: var(--space-3); }
+
+  .timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-5); }
+  .tl { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: var(--space-3); position: relative; }
+  .tl::before {
+    content: '';
+    position: absolute;
+    left: 10.4rem;
+    top: 0.55rem;
+    bottom: calc(var(--space-5) * -1);
+    width: 1px;
+    background: var(--line);
+  }
+  .tl:last-child::before { display: none; }
+  .tl__when { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em; padding-top: 0.35rem; position: relative; }
+  .tl__when::after {
+    content: '';
+    position: absolute;
+    right: -0.85rem;
+    top: 0.6rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .tl__role { margin: 0; font-size: var(--step-1); }
+  .tl__org { margin: 0.1rem 0 var(--space-2); color: var(--ink-soft); font-size: var(--step--1); }
+  .tl__body { max-width: var(--measure); }
+  .tl__stack { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: var(--space-2); }
+
+  @media (max-width: 760px) {
+    .tl { grid-template-columns: 1fr; gap: 0.4rem; }
+    .tl::before, .tl__when::after { display: none; }
+  }
+</style>

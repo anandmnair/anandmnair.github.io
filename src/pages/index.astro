@@ -1,0 +1,179 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostRow from '../components/PostRow.astro';
+import { site } from '../site';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .filter((p) => p.data.featured)
+  .slice(0, 4);
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+/* TODO — replace with what you are actually doing right now. */
+const now = [
+  ['Building', 'TODO — the thing that has your attention'],
+  ['Learning', 'TODO — a topic you are digging into'],
+  ['Reading', 'TODO — a book or paper'],
+];
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="hero__grid" aria-hidden="true"></div>
+    <div class="shell hero__inner">
+      <div class="hero__text reveal">
+        <p class="eyebrow">{site.role}</p>
+        <h1 class="hero__title">{site.tagline}</h1>
+        <p class="lede">{site.intro}</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="/projects/">Selected work</a>
+          <a class="btn" href="/blog/">Writing</a>
+        </div>
+      </div>
+
+      <aside class="now reveal" aria-label="Currently">
+        <p class="now__label">// currently</p>
+        <dl class="now__list">
+          {now.map(([k, v]) => (
+            <div class="now__item">
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="now__foot">{site.location}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="shell block">
+    <div class="block__head">
+      <p class="eyebrow">Selected work</p>
+      <a class="block__more" href="/projects/">All projects →</a>
+    </div>
+    {projects.length > 0 ? (
+      <div class="grid">
+        {projects.map((p) => (
+          <ProjectCard
+            href={`/projects/${p.id}/`}
+            title={p.data.title}
+            description={p.data.description}
+            year={p.data.year}
+            language={p.data.language}
+            tags={p.data.tags}
+            featured={p.data.featured}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="empty">No featured projects yet — add a markdown file under <code>src/content/projects/</code>.</p>
+    )}
+  </section>
+
+  <section class="shell block">
+    <div class="block__head">
+      <p class="eyebrow">Recent writing</p>
+      <a class="block__more" href="/blog/">All posts →</a>
+    </div>
+    {posts.length > 0 ? (
+      <div class="rows">
+        {posts.map((p) => (
+          <PostRow href={`/blog/${p.id}/`} title={p.data.title} description={p.data.description} date={p.data.date} tags={p.data.tags} />
+        ))}
+      </div>
+    ) : (
+      <p class="empty">Nothing published yet — add a markdown file under <code>src/content/blog/</code>.</p>
+    )}
+  </section>
+
+  <section class="shell block">
+    <div class="cta">
+      <div>
+        <h2 class="cta__title">Let's talk</h2>
+        <p class="cta__text">TODO — one line inviting people to reach out, and about what.</p>
+      </div>
+      <div class="cta__links">
+        {site.socials.map((s) => <a class="btn" href={s.href} rel="me noopener">{s.label}</a>)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { position: relative; overflow: hidden; padding: var(--space-6) 0 var(--space-5); }
+  .hero__grid {
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 130%;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(120% 80% at 78% 12%, #000 0%, transparent 68%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: start;
+  }
+  .hero__title {
+    font-size: var(--step-4);
+    font-variation-settings: 'SOFT' 30, 'WONK' 1, 'opsz' 120;
+    letter-spacing: -0.028em;
+    margin-bottom: var(--space-3);
+  }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: var(--space-4); }
+
+  .now {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elev);
+    padding: var(--space-3);
+    box-shadow: var(--shadow);
+  }
+  .now__label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-ink); letter-spacing: 0.1em; margin: 0 0 var(--space-2); }
+  .now__list { margin: 0; display: grid; gap: var(--space-2); }
+  .now__item { display: grid; gap: 0.15rem; padding-bottom: var(--space-2); border-bottom: 1px dashed var(--line); }
+  .now__item:last-of-type { border-bottom: 0; padding-bottom: 0; }
+  .now dt { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .now dd { margin: 0; font-size: var(--step--1); color: var(--ink-soft); line-height: 1.5; }
+  .now__foot { margin: var(--space-3) 0 0; font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); }
+
+  .block { padding-top: var(--space-5); }
+  .block__head { display: flex; align-items: baseline; gap: var(--space-3); }
+  .block__head .eyebrow { flex: 1; margin-bottom: var(--space-3); }
+  .block__more { font-family: var(--font-mono); font-size: 0.74rem; text-decoration: none; color: var(--muted); white-space: nowrap; }
+  .block__more:hover { color: var(--accent-ink); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3); }
+  .rows { display: grid; }
+  .empty { color: var(--muted); font-size: var(--step--1); }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--accent-wash), var(--bg-elev) 70%);
+  }
+  .cta__title { margin: 0 0 0.3rem; font-size: var(--step-2); }
+  .cta__text { margin: 0; color: var(--ink-soft); max-width: 42ch; }
+  .cta__links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  @media (max-width: 900px) {
+    .hero { padding-top: var(--space-5); }
+    .hero__inner { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

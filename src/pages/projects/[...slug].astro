@@ -1,0 +1,37 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+
+const meta = [entry.data.role, entry.data.year, entry.data.language].filter(Boolean) as string[];
+---
+
+<DocLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  eyebrow="Project"
+  meta={meta}
+  tags={entry.data.tags}
+  headings={headings}
+>
+  {(entry.data.repo || entry.data.docs) && (
+    <div class="links">
+      {entry.data.repo && <a class="btn btn--primary" href={entry.data.repo} rel="noopener">Repository</a>}
+      {entry.data.docs && <a class="btn" href={entry.data.docs} rel="noopener">Documentation</a>}
+    </div>
+  )}
+  <Content />
+  <p class="back"><a href="/projects/">← All projects</a></p>
+</DocLayout>
+
+<style>
+  .links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: var(--space-4); }
+  .back { margin-top: var(--space-5); padding-top: var(--space-3); border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 0.78rem; }
+</style>

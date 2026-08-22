@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostRow from '../../components/PostRow.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const years = [...new Set(posts.map((p) => p.data.date.getFullYear()))].sort((a, b) => b - a);
+---
+
+<BaseLayout title="Writing" description="Notes on architecture, Java, and the parts of engineering that are hard to Google.">
+  <div class="shell page">
+    <header class="page__head reveal">
+      <p class="eyebrow">Writing</p>
+      <h1>Notes and long-form</h1>
+      <p class="lede">TODO — what you write about and who it is for. Subscribe via <a href="/rss.xml">RSS</a>.</p>
+    </header>
+
+    {years.map((year) => (
+      <section class="year reveal">
+        <h2 class="year__label">{year}</h2>
+        <div>
+          {posts
+            .filter((p) => p.data.date.getFullYear() === year)
+            .map((p) => (
+              <PostRow href={`/blog/${p.id}/`} title={p.data.title} description={p.data.description} date={p.data.date} tags={p.data.tags} />
+            ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .page { padding: var(--space-5) 0 0; }
+  .page__head { max-width: var(--measure); margin-bottom: var(--space-4); }
+  .year { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: var(--space-3); margin-bottom: var(--space-4); }
+  .year__label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin: 0;
+    position: sticky;
+    top: 5.5rem;
+    align-self: start;
+  }
+  @media (max-width: 700px) {
+    .year { grid-template-columns: 1fr; gap: var(--space-2); }
+    .year__label { position: static; }
+  }
+</style>

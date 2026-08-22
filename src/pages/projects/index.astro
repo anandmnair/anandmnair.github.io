@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title)
+);
+---
+
+<BaseLayout title="Projects" description="Libraries, services and experiments — what they solve and how they are built.">
+  <div class="shell page">
+    <header class="page__head reveal">
+      <p class="eyebrow">Projects</p>
+      <h1>Things I have built</h1>
+      <p class="lede">
+        TODO — a line about how you pick what to build. Each entry links to the repository and, where there is one, the
+        documentation site.
+      </p>
+    </header>
+
+    <div class="grid reveal">
+      {projects.map((p) => (
+        <ProjectCard
+          href={`/projects/${p.id}/`}
+          title={p.data.title}
+          description={p.data.description}
+          year={p.data.year}
+          language={p.data.language}
+          tags={p.data.tags}
+          featured={p.data.featured}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page { padding: var(--space-5) 0 0; }
+  .page__head { max-width: var(--measure); margin-bottom: var(--space-4); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-3); }
+</style>

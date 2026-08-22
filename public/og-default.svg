@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f6f2ec"/>
+  <g stroke="#e0d8cc" stroke-width="1">
+    <path d="M0 158h1200M0 316h1200M0 474h1200M300 0v630M600 0v630M900 0v630"/>
+  </g>
+  <rect x="80" y="200" width="56" height="56" rx="12" fill="#b23c0c"/>
+  <text x="94" y="240" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#fffdf9">AMN</text>
+  <text x="80" y="360" font-family="Georgia,serif" font-size="76" fill="#1b1815">Anand M Nair</text>
+  <text x="80" y="420" font-family="ui-monospace,Menlo,monospace" font-size="26" fill="#7d756b">anandmnair.github.io</text>
+</svg>
