@@ -93,7 +93,7 @@ vitals:
   - label: Architecture & Design
     value: Standardising platform-wide microservices architecture and observability.
   - label: Open Source Contributions
-    value: Creator of Failover and RabbitMQ Advanced Spring Boot Starter.
+    value: Creator of open source libraries - GitHub
   - label: Leadership
     value: Leading and mentoring high-performing engineering teams.
   - label: Active Frontiers
@@ -113,10 +113,10 @@ starters:
   - /ai/
 ---
 
-I am a technology evangelist and architect with **17+ years** building software
-that has to keep working: high transaction volumes, strict regulatory
-constraints, and estates old enough that parts of them predate the people
-maintaining them.
+I'm a technology evangelist and architect with 17+ years of experience building
+software that needs to be reliable—handling high transaction volumes, strict
+regulatory requirements, and even legacy systems that have been around longer
+than some of the people maintaining them today.
 
 My work sits where architecture meets craft — event-driven microservices,
 domain-driven design, hexagonal boundaries, and a testing discipline that makes
