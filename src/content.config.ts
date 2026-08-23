@@ -34,6 +34,8 @@ const docs = defineCollection({
           page: z.string(),
           repo: z.string().url(),
           docs: z.string().url().optional(),
+          year: z.number().optional(),
+          badges: z.array(z.enum(['poc', 'product', 'library', 'opensource', 'experimental'])).optional(),
         })
       )
       .optional(),
