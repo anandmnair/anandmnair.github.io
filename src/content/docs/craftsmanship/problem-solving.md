@@ -24,6 +24,34 @@ three, sometimes at seven. And the chain must stay factual. The moment an answer
 becomes "because they were careless", you have stopped analysing and started
 allocating blame.
 
+### What makes a good problem statement
+
+A problem statement should describe the problem — nothing else. No fix baked
+in, no guess at the cause. Just the symptom, who it hits, and some evidence
+that it's real.
+
+The classic bad one: "the room is hot, turn on the AC." That isn't a problem
+statement, it's a solution wearing a disguise. A better version: "the room
+hits 29°C by 2pm, four degrees above every other room in the building, and
+it's been like this for two weeks." Now anyone can come in and suggest AC,
+better insulation, blinds, whatever — and there's a number to check the fix
+against later.
+
+A couple more:
+
+> **Bad:** "We need a caching layer."
+> **Good:** "Checkout API p95 latency is 2.1s, up from 400ms last month, and
+> 80% of that time comes from the same three read queries."
+
+> **Bad:** "Users want dark mode."
+> **Good:** "12% of support tickets this quarter mention eye strain or screen
+> brightness, and every major competitor already ships a dark theme."
+
+Simple test: if two different engineers read the statement and come back with
+two different, valid solutions, it's a real problem statement. If it can only
+lead to one answer, someone already picked the solution and wrote the problem
+to match.
+
 ### Study the problem before solving it
 
 The strongest predictor of a good solution is time spent understanding the
@@ -47,13 +75,38 @@ a piece.
 
 ### Think big, start small, scale fast
 
-- **Think big.** Know the target architecture. Without it, every small step is a
-  local optimum and the sum is a mess.
-- **Start small.** Ship the thinnest slice that proves the hard part. Not the
-  easy part — the risky one.
-- **Scale fast.** Once proven, industrialise deliberately: templates, shared
-  libraries, pipelines. This is the step most transformations skip, which is why
-  they produce one good service and forty legacy ones.
+- **Think big.** Get the full picture before touching anything — how deep the
+  problem goes, where the architecture needs to end up. Skip this and every
+  small step becomes a local fix that doesn't add up to much.
+- **Start small.** Once you know the big picture, don't try to solve it all at
+  once — that's where most people get stuck. Break it into small pieces. Do an
+  easy one first to build momentum, but don't save the hardest, riskiest piece
+  for last. Once you've got a couple of wins, go after the risky part next —
+  that's the one that actually proves the idea works.
+- **Scale fast.** Once it works on a small scale, roll it out properly:
+  templates, shared libraries, a real pipeline. Most transformations skip this
+  part, which is why they end up with one shiny new service and forty untouched
+  legacy ones.
+
+A good example from a past project: regulators told us only the person
+assigned to a deal should be able to see its sensitive details — not IT, not
+support, not even the DBAs. Problem was, that data moved through dozens of
+microservices across several platforms, since deals also touched approvals
+and other business processes along the way.
+
+Doing it the obvious way — going service by service, encrypting fields by
+hand — would have taken three to five years.
+
+Instead we studied the problem properly first, worked out where the real
+complexity was, then built one small library: mark a field `@Confidential`
+and it gets encrypted. We tried it on a single service first, with encryption
+behind a toggle switched off — that service already had a lot of other
+changes in flight, so we needed to be sure nothing else broke before flipping
+it on. Once it held up, we turned encryption on in production.
+
+By then we understood the problem and its rough edges well enough to roll the
+same library out everywhere else. A small team scaled it across the rest of
+the microservices in about a year to a year and a half, with no major issues.
 
 ### Find the blocker before adding people
 
@@ -61,7 +114,15 @@ A stalled programme is usually blocked on something specific and unglamorous —
 missing tool, an unavailable dataset, a dependency on a decision nobody owns.
 Adding engineers to a blocked programme produces more blocked engineers.
 
-One migration I worked on was estimated at two years and delivered in six months
-because the constraint was never capacity. It was that the migration rules had
-to be hand-written by users. Build the tool that derives them, and the two-year
-estimate evaporates.
+One migration I worked on was quoted at three to five years. First instinct
+was to throw two or three more people at it. Turned out headcount had nothing
+to do with it — the real problem was that business rules had to be pulled out
+of existing systems and processes too tangled for anyone to actually finalise,
+and every time a rule changed, the team redid the entire migration of millions
+of documents from scratch.
+
+We split the work in two instead. Move the documents first, with no rules
+applied at all — that was the heavy lifting, done once. Apply the business
+rules afterward, only to the metadata, which was cheap to redo whenever a
+rule changed. Add people to a blocked project and you just get more blocked
+people; find what's actually stuck first.
