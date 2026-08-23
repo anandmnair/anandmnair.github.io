@@ -1,7 +1,11 @@
 ---
 title: 'Agentic use cases'
-description: 'Where agents have genuinely earned their'
+description: >-
+  Knowledge extraction from legacy code, document-heavy workflows, migration tooling, test
+  generation — where agents have earned their place, and the one test that decides it: if
+  checking the agent's work costs more than doing it yourself, it's a liability.
 order: 3
+cardBadges: ['Agentic AI', 'RAG']
 ---
 
 Where agents have genuinely earned their place:

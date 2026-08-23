@@ -1,7 +1,11 @@
 ---
 title: 'Automation'
-description: 'The pattern that has worked most reliably: probabilistic extraction, deterministic'
+description: >-
+  Probabilistic extraction, deterministic validation. Splitting an LLM pipeline this way took
+  one document-verification pipeline from roughly 30% to 85% automated — and uncertain cases
+  still route to a human.
 order: 2
+cardBadges: ['LLM Extraction', 'Deterministic Validation']
 ---
 
 The pattern that has worked most reliably: **probabilistic extraction,
