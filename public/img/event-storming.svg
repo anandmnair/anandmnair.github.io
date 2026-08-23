@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-label="An event storming wall: orange domain events on a timeline, with commands, actors, aggregates, policies and hotspots around them">
+  <style>
+    .t{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    .n{font-size:10.5px;fill:#1e1b4b}
+    .k{font-size:11px;fill:#64748b}
+    .hd{font-size:13px;font-weight:600;fill:#1e1b4b}
+    .note{stroke:rgba(0,0,0,.14);stroke-width:1}
+  </style>
+  <rect width="720" height="360" fill="#f7f8fc"/>
+  <g stroke="#e0e4f0" stroke-width="1">
+    <path d="M0 60h720M0 150h720M0 240h720"/>
+  </g>
+
+  <text x="16" y="26" class="t hd">Time →</text>
+  <path d="M16 38 H704" stroke="#c8cce0" stroke-width="1.5" marker-end="url(#a)"/>
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#c8cce0"/></marker></defs>
+
+  <!-- domain events (orange) -->
+  <g class="t">
+    <g transform="translate(28,72) rotate(-1.5)"><rect width="104" height="66" rx="2" fill="#f5a623" class="note"/><text x="10" y="26" class="n">Order</text><text x="10" y="40" class="n">Placed</text></g>
+    <g transform="translate(180,74) rotate(1)"><rect width="104" height="66" rx="2" fill="#f5a623" class="note"/><text x="10" y="26" class="n">Payment</text><text x="10" y="40" class="n">Received</text></g>
+    <g transform="translate(332,70) rotate(-1)"><rect width="104" height="66" rx="2" fill="#f5a623" class="note"/><text x="10" y="26" class="n">Credit</text><text x="10" y="40" class="n">Approved</text></g>
+    <g transform="translate(484,76) rotate(1.8)"><rect width="104" height="66" rx="2" fill="#f5a623" class="note"/><text x="10" y="26" class="n">Order</text><text x="10" y="40" class="n">Shipped</text></g>
+  </g>
+
+  <!-- commands (blue) + actors (yellow) -->
+  <g class="t">
+    <g transform="translate(28,162) rotate(1)"><rect width="92" height="58" rx="2" fill="#7ab8e8" class="note"/><text x="10" y="24" class="n">Place</text><text x="10" y="38" class="n">Order</text></g>
+    <g transform="translate(136,168) rotate(-2)"><rect width="66" height="52" rx="2" fill="#ffe066" class="note"/><text x="9" y="24" class="n">Customer</text></g>
+    <g transform="translate(332,162) rotate(-1)"><rect width="92" height="58" rx="2" fill="#7ab8e8" class="note"/><text x="10" y="24" class="n">Approve</text><text x="10" y="38" class="n">Credit</text></g>
+    <g transform="translate(440,168) rotate(1.5)"><rect width="66" height="52" rx="2" fill="#ffe066" class="note"/><text x="9" y="24" class="n">Risk</text><text x="9" y="38" class="n">Officer</text></g>
+  </g>
+
+  <!-- policies (purple), aggregates (pale), hotspot (pink) -->
+  <g class="t">
+    <g transform="translate(180,250) rotate(-1.2)"><rect width="112" height="56" rx="2" fill="#c9a8e8" class="note"/><text x="10" y="24" class="n">whenever paid</text><text x="10" y="38" class="n">→ check credit</text></g>
+    <g transform="translate(332,252) rotate(1)"><rect width="96" height="56" rx="2" fill="#f3ece2" class="note"/><text x="10" y="24" class="n">Order</text><text x="10" y="38" class="k">aggregate</text></g>
+    <g transform="translate(484,246) rotate(-8)"><rect width="86" height="52" rx="2" fill="#f39ab5" class="note"/><text x="9" y="24" class="n">who owns</text><text x="9" y="38" class="n">the limit?</text></g>
+  </g>
+
+  <!-- legend -->
+  <g class="t" transform="translate(596,150)">
+    <g><rect width="12" height="12" fill="#f5a623" class="note"/><text x="18" y="10" class="k">event</text></g>
+    <g transform="translate(0,22)"><rect width="12" height="12" fill="#7ab8e8" class="note"/><text x="18" y="10" class="k">command</text></g>
+    <g transform="translate(0,44)"><rect width="12" height="12" fill="#ffe066" class="note"/><text x="18" y="10" class="k">actor</text></g>
+    <g transform="translate(0,66)"><rect width="12" height="12" fill="#c9a8e8" class="note"/><text x="18" y="10" class="k">policy</text></g>
+    <g transform="translate(0,88)"><rect width="12" height="12" fill="#f39ab5" class="note"/><text x="18" y="10" class="k">hotspot</text></g>
+  </g>
+</svg>

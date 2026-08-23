@@ -1,179 +1,687 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import PostRow from '../components/PostRow.astro';
+import Monogram from '../components/Monogram.astro';
+import { getSections } from '../nav';
 import { site } from '../site';
 
-const projects = (await getCollection('projects'))
-  .sort((a, b) => a.data.order - b.data.order)
-  .filter((p) => p.data.featured)
-  .slice(0, 4);
+const docs = await getCollection('docs');
+const home = docs.find((d) => d.id === 'home')!;
+const { Content } = await render(home);
+const {
+  competencies = [],
+  skills = [],
+  projects = [],
+  starters = [],
+  vitals = [],
+  stats = [],
+} = home.data;
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+const sections = await getSections();
+const starterCards = starters
+  .map((href) => sections.find((s) => s.href === href))
+  .filter(Boolean) as typeof sections;
 
-/* TODO — replace with what you are actually doing right now. */
-const now = [
-  ['Building', 'TODO — the thing that has your attention'],
-  ['Learning', 'TODO — a topic you are digging into'],
-  ['Reading', 'TODO — a book or paper'],
-];
+const vitalIcons: Record<string, string> = {
+  Experience:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>',
+  'AI Mastery & Craftsmanship':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 3z"/></svg>',
+  'Architecture & Design':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+  'Open Source Contributions':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>',
+  Leadership:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  'Active Frontiers':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15l-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0"/><path d="M12 15v5s3-.5 4-2c1.1-1.6 0-5 0-5"/></svg>',
+};
+
+const sectionEyebrowIcons: Record<string, string> = {
+  'About me':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>',
+  'Open source':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>',
+  'Start here':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v18"/><path d="M5 4h11l-2 4 2 4H5z"/></svg>',
+  'Core competencies':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg>',
+  'Technical skills':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>',
+};
+
+const defaultCardIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>';
+
+const starterIcons: Record<string, string> = {
+  Craftsmanship:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4l-2.6 2.6-2-2z"/></svg>',
+  Technology:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="7" r="2.4"/><circle cx="19" cy="7" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M7 8.3 10 16M17 8.3 14 16M7.4 7h9.2"/></svg>',
+  AI: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 3z"/></svg>',
+};
+
+const compIcons: Record<string, string> = {
+  'Digital transformation & legacy modernisation':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 5v4h-4"/><path d="M20 12a8 8 0 0 1-14 5.3M4 19v-4h4"/></svg>',
+  'Microservices & event-driven architecture':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a3 3 0 0 0 3 3M18 9v3a3 3 0 0 1-3 3"/></svg>',
+  'Domain-driven design':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h3v4.5A2.5 2.5 0 0 0 14.5 10H21v4h-4.5A2.5 2.5 0 0 0 14 16.5V21h-4v-4.5A2.5 2.5 0 0 0 7.5 14H3v-4h4.5A2.5 2.5 0 0 0 10 7.5V3z"/></svg>',
+  'Hexagonal architecture':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3.5h6l4.5 6.5L15 16.5H9L4.5 10z"/></svg>',
+  'Test-driven development':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.5 2.5L16 9"/></svg>',
+  'Behaviour-driven development':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a7 7 0 0 1-7 7H8l-5 3 1.5-5.2A7 7 0 1 1 21 12z"/></svg>',
+  'Design-first APIs':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg>',
+  'Observability by design':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+  'AI development life cycle':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 3z"/></svg>',
+  'Engineering leadership':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+};
+
+// Failover's own mark, pulled from its docs site (societe-generale.github.io/failover/web/assets/logo.svg).
+const projectIcons: Record<string, string> = {
+  Failover:
+    '<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#6366f1"/><path d="M26 20 h48 v16 H44 v12 h26 v14 H44 v18 H26 Z" fill="#fff"/><circle cx="76" cy="72" r="7" fill="#a5b4fc"/></svg>',
+  'RabbitMQ Advanced Spring Boot Starter':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h13l3 3-3 3H4z"/><path d="M4 17h13l3-3"/></svg>',
+  'Failover Demo':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor" stroke="none"/></svg>',
+};
+
+const dbIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg>';
+const springIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20c8-1 10-7 9-16 8 1 10 9 5 14-3 3-9 3-14 2z"/></svg>';
+const sparkleIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 3z"/></svg>';
+const plugIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6M15 2v6M6 8h12l-1 4a5 5 0 0 1-10 0z"/><path d="M12 16v4M9 20h6"/></svg>';
+const cloudIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.5-9 5.5 5.5 0 0 1 10.7-1.8A4 4 0 0 1 18 18z"/></svg>';
+const eyeIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+const gitBranchIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>';
+const rocketIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15l-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0"/><path d="M12 15v5s3-.5 4-2c1.1-1.6 0-5 0-5"/></svg>';
+
+const skillAreaIcons: Record<string, string> = {
+  Languages:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6-5 6 5 6M15 6l5 6-5 6"/></svg>',
+  'Front-end':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/><circle cx="6" cy="6" r=".6" fill="currentColor" stroke="none"/><circle cx="9" cy="6" r=".6" fill="currentColor" stroke="none"/></svg>',
+  Frameworks:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',
+  Messaging:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>',
+  Data: dbIcon,
+  APIs: plugIcon,
+  Containers:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>',
+  Observability: eyeIcon,
+  Cloud: cloudIcon,
+  Delivery: rocketIcon,
+  AI: sparkleIcon,
+};
+
+const skillItemIcons: Record<string, string> = {
+  Java: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 9h1.5a2.2 2.2 0 0 1 0 4.4H16"/><path d="M8 3.5c-.6.7-.6 1.3 0 2M12 3.5c-.6.7-.6 1.3 0 2"/></svg>',
+  Kotlin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4v16M5 12l9-8M5 12l9 8"/></svg>',
+  Python:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h4a3 3 0 0 1 3 3v3H9a3 3 0 0 0-3 3v3H4a2 2 0 0 1-2-2V8a5 5 0 0 1 5-5z"/><path d="M15 21h-4a3 3 0 0 1-3-3v-3h7a3 3 0 0 0 3-3V9h2a2 2 0 0 1 2 2v4a5 5 0 0 1-5 5z"/><circle cx="8.5" cy="6" r=".6" fill="currentColor" stroke="none"/><circle cx="15.5" cy="18" r=".6" fill="currentColor" stroke="none"/></svg>',
+  JavaScript:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><text x="12" y="16" text-anchor="middle" font-size="9" font-family="monospace" fill="currentColor">JS</text></svg>',
+  TypeScript:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><text x="12" y="16" text-anchor="middle" font-size="9" font-family="monospace" fill="currentColor">TS</text></svg>',
+  Angular:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><text x="12" y="16" text-anchor="middle" font-size="9" font-family="monospace" fill="currentColor">A</text></svg>',
+  HTML: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><text x="12" y="16" text-anchor="middle" font-size="8" font-family="monospace" fill="currentColor">&lt;/&gt;</text></svg>',
+  CSS: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><text x="12" y="16" text-anchor="middle" font-size="9" font-family="monospace" fill="currentColor">{}</text></svg>',
+  'Spring Boot': springIcon,
+  'Spring Cloud': springIcon,
+  'Spring AI': springIcon,
+  Kafka:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>',
+  RabbitMQ:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h13l3 3-3 3H4z"/><path d="M4 17h13l3-3"/></svg>',
+  Oracle: dbIcon,
+  PostgreSQL: dbIcon,
+  MongoDB: dbIcon,
+  Elasticsearch:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m20 20-5.2-5.2"/></svg>',
+  REST: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>',
+  'OpenAPI / Swagger': plugIcon,
+  'Contract testing':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 5-3 7.5-7 9-4-1.5-7-4-7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+  Docker:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="10" width="4" height="4"/><rect x="8" y="10" width="4" height="4"/><rect x="13" y="10" width="4" height="4"/><rect x="8" y="5" width="4" height="4"/><path d="M2 14c1 3 4 5 9 5 6 0 9.5-3 10.5-7-1 .5-2 .5-3 0"/></svg>',
+  Kubernetes:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 4.6v10.8L12 22l-8-4.6V6.6z"/><circle cx="12" cy="12" r="3"/></svg>',
+  'ELK Stack':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m20 20-5.2-5.2"/></svg>',
+  Grafana:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20V13"/></svg>',
+  APM: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2-7 4 14 3-9 2 4h5"/></svg>',
+  Azure: cloudIcon,
+  Git: gitBranchIcon,
+  Jenkins:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>',
+  'GitHub Actions':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 3 3 5-6"/></svg>',
+  'CI/CD':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 8.5a3.5 3.5 0 1 0 3.5 3.5c0-4 4-7 7-7a3.5 3.5 0 1 1 0 7c-3 0-3.5-3-7-3.5"/></svg>',
+  IaC: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3c-2 0-3 1-3 3v3c0 1-.5 1.5-2 1.5 1.5 0 2 .5 2 1.5v3c0 2 1 3 3 3M16 3c2 0 3 1 3 3v3c0 1 .5 1.5 2 1.5-1.5 0-2 .5-2 1.5v3c0 2-1 3-3 3"/></svg>',
+  Claude: sparkleIcon,
+  OpenAI: sparkleIcon,
+  'Agentic orchestration': sparkleIcon,
+  RAG: sparkleIcon,
+  'LLM evaluation': sparkleIcon,
+};
 ---
 
-<BaseLayout>
-  <section class="hero">
-    <div class="hero__grid" aria-hidden="true"></div>
-    <div class="shell hero__inner">
-      <div class="hero__text reveal">
-        <p class="eyebrow">{site.role}</p>
-        <h1 class="hero__title">{site.tagline}</h1>
-        <p class="lede">{site.intro}</p>
-        <div class="hero__cta">
-          <a class="btn btn--primary" href="/projects/">Selected work</a>
-          <a class="btn" href="/blog/">Writing</a>
+<BaseLayout description={home.data.description}>
+  <main id="main" data-pagefind-body>
+    <!-- ═══ who ═══ -->
+    <section class="hero">
+      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="wrap hero__inner">
+        <div class="hero__text">
+          <p class="eyebrow">{[site.role, site.location].filter(Boolean).join(' · ')}</p>
+          <h1 class="hero__name">{site.name}</h1>
+          <p class="hero__line">{site.tagline}</p>
+          <div class="hero__cta">
+            {site.socials.map((s, i) => (
+              <a class:list={['btn', { 'btn--primary': i === 0 }]} href={s.href} rel="me noopener">{s.label}</a>
+            ))}
+            <a class="btn" href="#open-source">Open source</a>
+          </div>
         </div>
+
+        <div class="hero__mark"><Monogram /></div>
       </div>
 
-      <aside class="now reveal" aria-label="Currently">
-        <p class="now__label">// currently</p>
-        <dl class="now__list">
-          {now.map(([k, v]) => (
-            <div class="now__item">
-              <dt>{k}</dt>
-              <dd>{v}</dd>
+      {stats.length > 0 && (
+        <div class="wrap">
+          <dl class="stats">
+            {stats.map((s) => (
+              <div class="stats__item">
+                <dt>{s.value}</dt>
+                <dd>{s.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      )}
+    </section>
+
+    <!-- ═══ about ═══ -->
+    <section class="wrap block about-block">
+      <div class="about-block__main">
+        <header class="block__head">
+          <p class="eyebrow"><span class="eyebrow__icon" set:html={sectionEyebrowIcons['About me']} />About me</p>
+          <h2 class="block__title">The short version</h2>
+        </header>
+
+        <div class="about__prose prose"><Content /></div>
+      </div>
+
+      <aside class="about__side">
+        <dl class="vitals">
+          {vitals.map((v) => (
+            <div class="vitals__row">
+              <dt><span class="vitals__icon" set:html={vitalIcons[v.label] ?? ''} />{v.label}</dt>
+              <dd>{v.value}</dd>
             </div>
           ))}
         </dl>
-        <p class="now__foot">{site.location}</p>
+        <a class="about__more" href="/about/">The long version →</a>
+        {site.wip.enabled && (
+          <p class="wipnote"><span>{site.wip.label}</span> {site.wip.note}</p>
+        )}
       </aside>
-    </div>
-  </section>
+    </section>
 
-  <section class="shell block">
-    <div class="block__head">
-      <p class="eyebrow">Selected work</p>
-      <a class="block__more" href="/projects/">All projects →</a>
-    </div>
-    {projects.length > 0 ? (
-      <div class="grid">
-        {projects.map((p) => (
-          <ProjectCard
-            href={`/projects/${p.id}/`}
-            title={p.data.title}
-            description={p.data.description}
-            year={p.data.year}
-            language={p.data.language}
-            tags={p.data.tags}
-            featured={p.data.featured}
-          />
+    <!-- ═══ open source ═══ -->
+    <section class="os" id="open-source">
+      <div class="wrap">
+        <header class="block__head os__head">
+          <div>
+            <p class="eyebrow eyebrow--accent"><span class="eyebrow__icon" set:html={sectionEyebrowIcons['Open source']} />Open source</p>
+            <h2 class="block__title">Open Source Contributions :: Libraries in production, not demos</h2>
+            <p class="os__sub">
+              Each of these started as an internal fix for a problem that kept recurring across
+              teams, and earned its way out.
+            </p>
+          </div>
+          <a class="btn" href="/projects/">All projects</a>
+        </header>
+
+        <div class="projects">
+          {projects.map((p) => (
+            <article class="proj">
+              <div class="proj__top">
+                <span class="proj__icon" set:html={projectIcons[p.name] ?? defaultCardIcon} />
+                <h3 class="proj__name"><a href={p.page}>{p.name}</a></h3>
+                <svg class="proj__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 18 18 6M9 6h9v9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <p class="proj__stack">{p.stack.split(' · ').map((s) => <span>{s}</span>)}</p>
+              <p class="proj__blurb">{p.blurb}</p>
+              <p class="proj__links">
+                <a href={p.repo} rel="noopener">Repository</a>
+                {p.docs && <a href={p.docs} rel="noopener">Docs</a>}
+                <a class="proj__more" href={p.page}>Read more</a>
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ start here ═══ -->
+    <section class="wrap block">
+      <header class="block__head">
+        <p class="eyebrow"><span class="eyebrow__icon" set:html={sectionEyebrowIcons['Start here']} />Start here</p>
+        <h2 class="block__title">If you only read three things</h2>
+      </header>
+      <div class="starters">
+        {starterCards.map((s) => (
+          <a class="starter" href={s.href}>
+            <span class="starter__head">
+              <span class="starter__icon" set:html={starterIcons[s.label] ?? defaultCardIcon} />
+              <span class="starter__label">{s.label}</span>
+            </span>
+            <span class="starter__desc">{s.description}</span>
+          </a>
         ))}
       </div>
-    ) : (
-      <p class="empty">No featured projects yet — add a markdown file under <code>src/content/projects/</code>.</p>
-    )}
-  </section>
+    </section>
 
-  <section class="shell block">
-    <div class="block__head">
-      <p class="eyebrow">Recent writing</p>
-      <a class="block__more" href="/blog/">All posts →</a>
-    </div>
-    {posts.length > 0 ? (
-      <div class="rows">
-        {posts.map((p) => (
-          <PostRow href={`/blog/${p.id}/`} title={p.data.title} description={p.data.description} date={p.data.date} tags={p.data.tags} />
+    <!-- ═══ competencies ═══ -->
+    <section class="wrap block">
+      <header class="block__head">
+        <p class="eyebrow"><span class="eyebrow__icon" set:html={sectionEyebrowIcons['Core competencies']} />Core competencies</p>
+        <h2 class="block__title">What I am asked for</h2>
+      </header>
+      <ul class="comp">
+        {competencies.map((c, i) => (
+          <li>
+            <a href={c.href}>
+              <span class="comp__num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="comp__head">
+                <span class="comp__icon" set:html={compIcons[c.label] ?? defaultCardIcon} />
+                <span class="comp__label">{c.label}</span>
+              </span>
+              <span class="comp__detail">{c.detail}</span>
+            </a>
+          </li>
         ))}
-      </div>
-    ) : (
-      <p class="empty">Nothing published yet — add a markdown file under <code>src/content/blog/</code>.</p>
-    )}
-  </section>
+      </ul>
+    </section>
 
-  <section class="shell block">
-    <div class="cta">
-      <div>
-        <h2 class="cta__title">Let's talk</h2>
-        <p class="cta__text">TODO — one line inviting people to reach out, and about what.</p>
-      </div>
-      <div class="cta__links">
-        {site.socials.map((s) => <a class="btn" href={s.href} rel="me noopener">{s.label}</a>)}
-      </div>
-    </div>
-  </section>
+    <!-- ═══ skills ═══ -->
+    <section class="wrap block block--last">
+      <header class="block__head">
+        <p class="eyebrow"><span class="eyebrow__icon" set:html={sectionEyebrowIcons['Technical skills']} />Technical skills</p>
+        <h2 class="block__title">What I build with</h2>
+      </header>
+      <dl class="skills">
+        {skills.map((s) => (
+          <div class="skills__row">
+            <dt>
+              <span class="skills__icon" set:html={skillAreaIcons[s.area] ?? defaultCardIcon} />
+              {s.area}
+            </dt>
+            <dd>
+              {s.items.map((i) => (
+                <span class="tag">
+                  <span class="tag__icon" set:html={skillItemIcons[i] ?? defaultCardIcon} />
+                  {i}
+                </span>
+              ))}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  </main>
 </BaseLayout>
 
 <style>
-  .hero { position: relative; overflow: hidden; padding: var(--space-6) 0 var(--space-5); }
+  .wrap { width: min(100% - 2.5rem, var(--shell)); margin-inline: auto; position: relative; z-index: 1; }
+
+  /* ───────── hero ───────── */
+  .hero { position: relative; overflow: hidden; padding: var(--space-6) 0 0; border-bottom: 1px solid var(--line); }
   .hero__grid {
     position: absolute;
-    inset: -20% -10% auto -10%;
-    height: 130%;
+    inset: -40% -10% auto -10%;
+    height: 190%;
     background-image:
       linear-gradient(var(--line) 1px, transparent 1px),
       linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(120% 80% at 78% 12%, #000 0%, transparent 68%);
-    opacity: 0.55;
+    background-size: 72px 72px;
+    mask-image: radial-gradient(105% 78% at 80% 6%, #000 0%, transparent 60%);
+    opacity: 0.65;
     pointer-events: none;
   }
   .hero__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
     gap: var(--space-5);
-    align-items: start;
+    align-items: center;
+    padding-bottom: var(--space-5);
   }
-  .hero__title {
-    font-size: var(--step-4);
-    font-variation-settings: 'SOFT' 30, 'WONK' 1, 'opsz' 120;
-    letter-spacing: -0.028em;
-    margin-bottom: var(--space-3);
+  .hero__name {
+    font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    margin: 0 0 var(--space-3);
   }
-  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: var(--space-4); }
+  .hero__line {
+    font-size: var(--step-0);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: clamp(39ch, 40vw, 63ch);
+    margin: 0;
+    letter-spacing: 0.005em;
+    padding-left: 1rem;
+    border-left: 2px solid var(--accent);
+  }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: var(--space-4); }
+  .hero__mark { display: grid; place-items: center; }
 
-  .now {
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    margin: 0;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+  }
+  .stats__item { background: var(--bg); padding: var(--space-3) var(--space-2) var(--space-4); }
+  .stats dt {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    line-height: 1;
+    color: var(--accent);
+  }
+  .stats dd {
+    margin: 0.4rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ───────── blocks ───────── */
+  .block { padding-top: var(--space-5); }
+  .block--last { padding-bottom: var(--space-4); }
+  .block__head { margin-bottom: var(--space-4); }
+  .block__title { font-size: var(--step-2); margin: 0; }
+
+  /* ───────── about ───────── */
+  .about-block { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--space-5); align-items: start; }
+  .about-block__main { min-width: 0; }
+  .about__prose { max-width: clamp(42ch, 50vw, 72ch); }
+  .about__prose :global(p) { line-height: 1.6; letter-spacing: 0.005em; color: var(--ink-soft); }
+  .about__prose :global(p:first-child) {
+    font-size: var(--step-0);
+    line-height: 1.55;
+    color: var(--ink);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--accent);
+  }
+  .about__side {
+    display: grid;
+    align-self: start;
+    gap: var(--space-3);
+    padding: var(--space-4);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     background: var(--bg-elev);
-    padding: var(--space-3);
-    box-shadow: var(--shadow);
   }
-  .now__label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-ink); letter-spacing: 0.1em; margin: 0 0 var(--space-2); }
-  .now__list { margin: 0; display: grid; gap: var(--space-2); }
-  .now__item { display: grid; gap: 0.15rem; padding-bottom: var(--space-2); border-bottom: 1px dashed var(--line); }
-  .now__item:last-of-type { border-bottom: 0; padding-bottom: 0; }
-  .now dt { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  .now dd { margin: 0; font-size: var(--step--1); color: var(--ink-soft); line-height: 1.5; }
-  .now__foot { margin: var(--space-3) 0 0; font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); }
 
-  .block { padding-top: var(--space-5); }
-  .block__head { display: flex; align-items: baseline; gap: var(--space-3); }
-  .block__head .eyebrow { flex: 1; margin-bottom: var(--space-3); }
-  .block__more { font-family: var(--font-mono); font-size: 0.74rem; text-decoration: none; color: var(--muted); white-space: nowrap; }
-  .block__more:hover { color: var(--accent-ink); }
+  .vitals { margin: 0; display: grid; }
+  .vitals__row { padding: 0.6rem 0; display: grid; gap: 0.2rem; border-bottom: 1px solid var(--line); transition: padding-left 0.2s var(--ease); }
+  .vitals__row:first-child { padding-top: 0; }
+  .vitals__row:last-child { border-bottom: none; padding-bottom: 0; }
+  .vitals__row:hover { padding-left: 0.3rem; }
+  .vitals dt {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .vitals__icon { flex: none; width: 14px; height: 14px; color: var(--accent-ink); }
+  .vitals__icon :global(svg) { width: 100%; height: 100%; display: block; }
+  .vitals dd { margin: 0; font-size: var(--step--1); line-height: 1.5; color: var(--ink-soft); }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-3); }
-  .rows { display: grid; }
-  .empty { color: var(--muted); font-size: var(--step--1); }
+  .about__more {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--accent-ink);
+    text-decoration: none;
+    transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+  .about__more:hover { border-color: var(--accent); background: var(--accent-wash); transform: translateX(2px); }
 
-  .cta {
+  .wipnote {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0.6rem 0.8rem;
+    border: 1px dashed color-mix(in oklab, var(--accent) 42%, transparent);
+    border-radius: var(--radius-lg);
+    background: var(--accent-wash);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+  .wipnote span {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    flex: none;
+  }
+
+  /* ───────── open source ───────── */
+  .os {
+    margin-top: var(--space-6);
+    padding: var(--space-5) 0 var(--space-5);
+    border-block: 1px solid var(--line);
+    background:
+      radial-gradient(80% 120% at 8% 0%, var(--accent-wash), transparent 62%),
+      var(--bg-sunken);
+  }
+  .os__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-3); }
+  .os__sub { margin: var(--space-2) 0 0; color: var(--ink-soft); max-width: clamp(38ch, 46vw, 62ch); font-size: var(--step--1); }
+
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-3); }
+  .proj {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: var(--space-3);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elev);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+  .proj::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent 70%);
+    transform: scaleX(0.18);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .proj:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent); }
+  .proj:hover::before { transform: scaleX(1); }
+
+  .proj__top { display: flex; align-items: center; gap: 0.55rem; }
+  .proj__icon { flex: none; width: 22px; height: 22px; color: var(--accent-ink); border-radius: 5px; overflow: hidden; }
+  .proj__icon svg { width: 100%; height: 100%; display: block; }
+  .proj__name { margin: 0; margin-right: auto; font-size: var(--step-1); line-height: 1.2; }
+  .proj__name a { color: inherit; text-decoration: none; }
+  .proj__name a::after { content: ''; position: absolute; inset: 0; }
+  .proj:hover .proj__name a { color: var(--accent-ink); }
+  .proj__arrow { width: 16px; height: 16px; flex: none; color: var(--muted); transition: color 0.2s var(--ease), transform 0.25s var(--ease); }
+  .proj:hover .proj__arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+  .proj__stack { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0; }
+  .proj__stack span {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.04em;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    background: var(--bg-sunken);
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .proj__blurb { margin: 0; flex: 1; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.55; }
+  .proj__links {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, var(--accent-wash), var(--bg-elev) 70%);
+    gap: 0.4rem 0.9rem;
+    margin: var(--space-2) 0 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line);
+    font-size: 0.82rem;
+    position: relative;
+    z-index: 1;
   }
-  .cta__title { margin: 0 0 0.3rem; font-size: var(--step-2); }
-  .cta__text { margin: 0; color: var(--ink-soft); max-width: 42ch; }
-  .cta__links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .proj__more { margin-left: auto; font-family: var(--font-mono); font-size: 0.72rem; }
 
-  @media (max-width: 900px) {
+  /* ───────── starters ───────── */
+  .starters { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-3); }
+  .starter {
+    display: grid;
+    gap: 0.3rem;
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elev);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  .starter::after {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s var(--ease);
+  }
+  .starter:hover { transform: translateY(-3px); border-color: var(--line-strong); box-shadow: var(--shadow); }
+  .starter:hover::after { transform: scaleY(1); }
+  .starter__head { display: flex; align-items: center; gap: 0.5rem; }
+  .starter__icon { flex: none; width: 18px; height: 18px; color: var(--accent-ink); }
+  .starter__icon svg { width: 100%; height: 100%; display: block; }
+  .starter__label { font-family: var(--font-display); font-size: var(--step-1); }
+  .starter__desc { color: var(--ink-soft); font-size: var(--step--1); line-height: 1.5; }
+
+  /* ───────── competencies ───────── */
+  .comp {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+  .comp a {
+    display: grid;
+    grid-template-columns: 2.2rem minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    gap: 0.15rem 0.4rem;
+    height: 100%;
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elev);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s var(--ease);
+  }
+  .comp a:hover { background: var(--accent-wash); }
+  .comp__num { grid-row: 1 / 3; font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); padding-top: 0.2rem; }
+  .comp a:hover .comp__num { color: var(--accent); }
+  .comp__head { display: flex; align-items: center; gap: 0.4rem; }
+  .comp__icon { flex: none; width: 16px; height: 16px; color: var(--accent-ink); }
+  .comp__icon svg { width: 100%; height: 100%; display: block; }
+  .comp__label { font-weight: 500; line-height: 1.3; }
+  .comp a:hover .comp__label { color: var(--accent-ink); }
+  .comp__detail { color: var(--muted); font-size: var(--step--1); line-height: 1.45; }
+
+  /* ───────── skills ───────── */
+  .skills { margin: 0; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .skills__row {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: var(--space-3);
+    padding: 0.7rem var(--space-3);
+    background: var(--bg-elev);
+    align-items: baseline;
+  }
+  .skills dt {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .skills__icon { flex: none; width: 15px; height: 15px; color: var(--accent-ink); }
+  .skills__icon svg { width: 100%; height: 100%; display: block; }
+  .skills dd { margin: 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .skills .tag { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .tag__icon { flex: none; width: 12px; height: 12px; color: currentColor; opacity: 0.85; }
+  .tag__icon svg { width: 100%; height: 100%; display: block; }
+
+  @media (max-width: 960px) {
     .hero { padding-top: var(--space-5); }
-    .hero__inner { grid-template-columns: minmax(0, 1fr); }
+    .hero__inner { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+    .hero__mark { order: -1; width: min(58%, 220px); justify-self: start; }
+    .about-block { grid-template-columns: minmax(0, 1fr); }
+    .skills__row { grid-template-columns: 1fr; gap: 0.5rem; }
+    .comp { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
   }
 </style>

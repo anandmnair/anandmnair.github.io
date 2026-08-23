@@ -1,29 +1,48 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getSections } from '../nav';
+
+const nav = await getSections();
 ---
 
 <BaseLayout title="Not found" description="That page does not exist.">
-  <div class="shell nf">
+  <main id="main" class="nf">
     <p class="eyebrow">HTTP 404</p>
     <h1 class="nf__code">404</h1>
     <p class="lede">That page is not here. It may have moved, or it may never have existed.</p>
-    <p class="nf__links">
+    <p class="nf__actions">
       <a class="btn btn--primary" href="/">Home</a>
-      <a class="btn" href="/blog/">Writing</a>
-      <button class="btn" type="button" data-search-open>Search</button>
+      <button class="btn" type="button" data-search-open>Search the site</button>
     </p>
-  </div>
+
+    <p class="nf__label">Or pick a section</p>
+    <nav class="nf__nav" aria-label="All sections">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+  </main>
 </BaseLayout>
 
 <style>
-  .nf { padding: var(--space-6) 0; max-width: var(--measure); }
+  .nf { width: min(100% - 2.5rem, var(--shell)); margin-inline: auto; padding: var(--space-6) 0; position: relative; z-index: 1; }
   .nf__code {
-    font-size: clamp(5rem, 22vw, 12rem);
+    font-size: clamp(5rem, 20vw, 11rem);
     line-height: 0.85;
-    font-variation-settings: 'SOFT' 60, 'WONK' 1, 'opsz' 144;
+    font-weight: 800;
+    letter-spacing: -0.04em;
     color: var(--accent);
     margin: 0 0 var(--space-3);
   }
-  .nf__links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: var(--space-4); }
-  .nf__links button { font-family: var(--font-mono); cursor: pointer; }
+  .nf__actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: var(--space-4); }
+  .nf__actions button { font-family: var(--font-mono); cursor: pointer; }
+  .nf__label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: var(--space-5) 0 var(--space-2);
+  }
+  .nf__nav { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 0.3rem 1rem; font-size: 0.9rem; }
+  .nf__nav a { color: var(--ink-soft); text-decoration: none; }
+  .nf__nav a:hover { color: var(--accent-ink); }
 </style>

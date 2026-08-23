@@ -3,110 +3,126 @@ import { site } from '../site';
 import ThemeToggle from './ThemeToggle.astro';
 import FontSize from './FontSize.astro';
 import Search from './Search.astro';
-
-const path = Astro.url.pathname;
-const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+import TopNav from './TopNav.astro';
 ---
 
 <header class="hdr">
-  <div class="shell hdr__inner">
-    <a class="mark" href="/" aria-label={`${site.name} — home`}>
-      <span class="mark__badge" aria-hidden="true">{site.initials}</span>
-      <span class="mark__name">{site.name}</span>
-    </a>
-
-    <nav class="nav" aria-label="Primary">
-      {site.nav.map((item) => (
-        <a href={item.href} class:list={['nav__link', { 'is-active': isActive(item.href) }]}>
-          {item.label}
-        </a>
-      ))}
-    </nav>
-
-    <div class="tools">
-      <Search />
-      <FontSize />
-      <ThemeToggle />
-      <button type="button" class="burger" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu">
+  <div class="hdr__bar">
+    <div class="hdr__bar-inner">
+      <button type="button" class="burger" data-drawer-toggle aria-expanded="false" aria-label="Section menu">
         <span aria-hidden="true"></span>
       </button>
+
+      <a class="mark" href="/" aria-label={`${site.name} — home`}>
+        <svg class="mark__badge" viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M20 3 34 11.5v17L20 37 6 28.5v-17z" />
+          <text x="20" y="24.4" text-anchor="middle">{site.initials}</text>
+        </svg>
+        <span class="mark__text">
+          <span class="mark__name">
+            {site.name}
+            {site.wip.enabled && <span class="wip" title={site.wip.note}>{site.wip.label}</span>}
+          </span>
+          <span class="mark__role">{site.role}</span>
+        </span>
+      </a>
+
+      <div class="find"><Search /></div>
+
+      <div class="tools">
+        <FontSize />
+        <span class="tools__rule" aria-hidden="true"></span>
+        <ThemeToggle />
+      </div>
     </div>
   </div>
 
-  <nav class="mobile" id="mobile-nav" aria-label="Primary, mobile" hidden>
-    {site.nav.map((item) => <a href={item.href} class:list={{ 'is-active': isActive(item.href) }}>{item.label}</a>)}
-  </nav>
+  <div class="hdr__tabs"><div class="hdr__tabs-inner"><TopNav /></div></div>
 </header>
+
+<div class="scrim" data-drawer-scrim hidden></div>
 
 <style>
   .hdr {
     position: sticky;
     top: 0;
-    z-index: 20;
-    background: color-mix(in oklab, var(--bg) 82%, transparent);
+    z-index: 50;
+    background: color-mix(in oklab, var(--bg) 88%, transparent);
     backdrop-filter: saturate(1.4) blur(10px);
     border-bottom: 1px solid var(--line);
   }
-  .hdr__inner {
+  .hdr__bar { border-bottom: 1px solid var(--line); }
+  .hdr__bar-inner {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    min-height: 4rem;
+    min-height: 3.75rem;
+    width: min(100% - 2.5rem, var(--shell));
+    margin-inline: auto;
   }
+  .hdr__tabs { position: relative; }
+  .hdr__tabs-inner { width: min(100% - 2.5rem, var(--shell)); margin-inline: auto; }
 
-  .mark { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--ink); }
-  .mark__badge {
-    display: grid;
-    place-items: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: var(--accent);
-    color: #fff;
+  .mark { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--ink); flex: none; }
+  .mark__badge { width: 30px; height: 30px; flex: none; overflow: visible; }
+  .mark__badge path {
+    fill: var(--accent-wash);
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    transition: fill 0.25s var(--ease);
+  }
+  .mark__badge text {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.04em;
-    transform: rotate(-4deg);
-    transition: transform 0.25s var(--ease);
+    font-size: 11px;
+    font-weight: 500;
+    fill: var(--accent-ink);
   }
-  :root[data-theme='dark'] .mark__badge { color: #17110c; }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .mark__badge { color: #17110c; }
-  }
-  .mark:hover .mark__badge { transform: rotate(4deg) scale(1.05); }
-  .mark__name { font-family: var(--font-display); font-size: 1.02rem; font-weight: 550; letter-spacing: -0.01em; }
+  .mark:hover .mark__badge path { fill: color-mix(in oklab, var(--accent) 22%, transparent); }
 
-  .nav { display: flex; gap: 0.25rem; margin-left: auto; }
-  .nav__link {
-    position: relative;
-    padding: 0.4rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.88rem;
-    color: var(--ink-soft);
-    text-decoration: none;
-    transition: color 0.2s var(--ease), background 0.2s var(--ease);
+  .mark__text { display: grid; line-height: 1.2; }
+  .mark__name {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
   }
-  .nav__link:hover { color: var(--ink); background: var(--bg-sunken); }
-  .nav__link.is-active { color: var(--accent-ink); }
-  .nav__link.is-active::after {
-    content: '';
-    position: absolute;
-    left: 0.7rem;
-    right: 0.7rem;
-    bottom: 0.12rem;
-    height: 1.5px;
-    background: var(--accent);
-    border-radius: 2px;
+  .mark__role {
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    white-space: nowrap;
   }
 
-  .tools { display: flex; align-items: center; gap: 0.5rem; margin-left: 0.5rem; }
+  .wip {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent-wash);
+    border: 1px solid color-mix(in oklab, var(--accent) 32%, transparent);
+    border-radius: 4px;
+    padding: 0.1rem 0.32rem;
+    cursor: help;
+  }
+
+  .find { flex: 1; display: flex; justify-content: center; min-width: 0; padding-inline: var(--space-2); }
+
+  .tools { display: flex; align-items: center; gap: 0.5rem; flex: none; }
+  .tools__rule { width: 1px; height: 20px; background: var(--line); }
 
   .burger {
     display: none;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
+    flex: none;
     border: 1px solid var(--line);
-    border-radius: 999px;
+    border-radius: 9px;
     background: var(--bg-sunken);
     cursor: pointer;
     position: relative;
@@ -114,12 +130,12 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .burger span, .burger span::before, .burger span::after {
     position: absolute;
     left: 50%;
-    width: 14px;
+    width: 15px;
     height: 1.5px;
     background: var(--ink);
     transform: translateX(-50%);
     content: '';
-    transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+    transition: transform 0.2s var(--ease), background 0.2s var(--ease);
   }
   .burger span { top: 50%; margin-top: -0.75px; }
   .burger span::before { top: -5px; left: 0; transform: none; }
@@ -128,27 +144,38 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .burger[aria-expanded='true'] span::before { transform: translateY(5px) rotate(45deg); }
   .burger[aria-expanded='true'] span::after { transform: translateY(-5px) rotate(-45deg); }
 
-  .mobile { display: none; flex-direction: column; padding: var(--space-2) 1.25rem var(--space-3); border-top: 1px solid var(--line); }
-  .mobile a { padding: 0.6rem 0; text-decoration: none; color: var(--ink-soft); border-bottom: 1px solid var(--line); }
-  .mobile a.is-active { color: var(--accent-ink); }
+  .scrim { position: fixed; inset: 0; z-index: 35; background: rgba(0, 0, 0, 0.4); }
 
-  @media (max-width: 800px) {
-    .nav { display: none; }
+  @media (max-width: 900px) {
     .burger { display: block; }
-    .mobile:not([hidden]) { display: flex; }
-    .tools { margin-left: auto; }
+    .mark__role { display: none; }
+    .find { justify-content: flex-end; padding-inline: 0; }
+  }
+  @media (max-width: 640px) {
+    .mark__name { font-size: 0.9rem; }
+    .wip { display: none; }
+    .tools { gap: 0.35rem; }
+  }
+  @media (max-width: 460px) {
+    .mark__text { display: none; }
+  }
+  @media (min-width: 901px) {
+    .scrim { display: none; }
   }
 </style>
 
 <script is:inline>
   (() => {
-    const btn = document.querySelector('[data-nav-toggle]');
-    const menu = document.getElementById('mobile-nav');
-    if (!btn || !menu) return;
-    btn.addEventListener('click', () => {
-      const open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!open));
-      menu.hidden = open;
-    });
+    const btn = document.querySelector('[data-drawer-toggle]');
+    const scrim = document.querySelector('[data-drawer-scrim]');
+    if (!btn) return;
+    const set = (open) => {
+      document.body.classList.toggle('drawer-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      if (scrim) scrim.hidden = !open;
+    };
+    btn.addEventListener('click', () => set(!document.body.classList.contains('drawer-open')));
+    scrim?.addEventListener('click', () => set(false));
+    document.addEventListener('keydown', (e) => e.key === 'Escape' && set(false));
   })();
 </script>

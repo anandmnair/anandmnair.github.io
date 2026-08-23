@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" role="img" aria-label="Two ways to slice delivery: components that are useless until the end, versus something usable at every step">
+  <style>
+    .t{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    .lbl{font-size:13px;fill:#312e81}
+    .cap{font-size:12px;fill:#64748b}
+    .hd{font-size:14px;font-weight:600;fill:#1e1b4b}
+    .ink{fill:none;stroke:#312e81;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+    .wheel{fill:#f7f8fc;stroke:#312e81;stroke-width:2.2}
+    .bad{fill:#e6ded4}
+    .good{fill:#c7d2fe}
+  </style>
+
+  <text x="16" y="24" class="t hd">Slicing by component — nothing works until the last step</text>
+  <g class="t">
+    <g transform="translate(30,54)">
+      <circle cx="26" cy="40" r="20" class="wheel"/>
+      <text x="0" y="82" class="cap">wheel</text>
+    </g>
+    <g transform="translate(200,54)">
+      <rect x="0" y="26" width="86" height="14" rx="4" class="bad" stroke="#312e81" stroke-width="2.2"/>
+      <circle cx="16" cy="52" r="12" class="wheel"/><circle cx="70" cy="52" r="12" class="wheel"/>
+      <text x="0" y="82" class="cap">chassis</text>
+    </g>
+    <g transform="translate(370,54)">
+      <path d="M2 40 L18 16 H74 L90 40 Z" class="bad" stroke="#312e81" stroke-width="2.2"/>
+      <rect x="0" y="40" width="92" height="12" rx="4" class="bad" stroke="#312e81" stroke-width="2.2"/>
+      <text x="0" y="82" class="cap">body</text>
+    </g>
+    <g transform="translate(545,54)">
+      <path d="M4 44 L22 18 H82 L100 44 Z" class="good" stroke="#312e81" stroke-width="2.2"/>
+      <rect x="0" y="44" width="104" height="14" rx="5" class="good" stroke="#312e81" stroke-width="2.2"/>
+      <circle cx="24" cy="66" r="12" class="wheel"/><circle cx="82" cy="66" r="12" class="wheel"/>
+      <text x="0" y="96" class="cap">car — first feedback, month 18</text>
+    </g>
+  </g>
+
+  <line x1="16" y1="176" x2="704" y2="176" stroke="#e0e4f0" stroke-width="1"/>
+
+  <text x="16" y="208" class="t hd">Slicing by outcome — usable at every step</text>
+  <g class="t">
+    <g transform="translate(30,238)">
+      <rect x="0" y="30" width="72" height="9" rx="4" class="good" stroke="#312e81" stroke-width="2.2"/>
+      <circle cx="14" cy="50" r="10" class="wheel"/><circle cx="58" cy="50" r="10" class="wheel"/>
+      <text x="0" y="82" class="cap">skateboard</text>
+    </g>
+    <g transform="translate(200,238)">
+      <circle cx="16" cy="50" r="12" class="wheel"/><circle cx="70" cy="50" r="12" class="wheel"/>
+      <path d="M16 50 H70 M62 50 V20 H78" class="ink"/>
+      <rect x="0" y="44" width="40" height="8" rx="4" class="good" stroke="#312e81" stroke-width="2.2"/>
+      <text x="0" y="82" class="cap">scooter</text>
+    </g>
+    <g transform="translate(370,238)">
+      <circle cx="18" cy="48" r="18" class="wheel"/><circle cx="86" cy="48" r="18" class="wheel"/>
+      <path d="M18 48 L48 20 H70 L86 48 M48 20 L40 48 M70 20 V12 H82" class="ink"/>
+      <text x="0" y="82" class="cap">bicycle</text>
+    </g>
+    <g transform="translate(545,238)">
+      <path d="M4 44 L22 18 H82 L100 44 Z" class="good" stroke="#312e81" stroke-width="2.2"/>
+      <rect x="0" y="44" width="104" height="14" rx="5" class="good" stroke="#312e81" stroke-width="2.2"/>
+      <circle cx="24" cy="66" r="12" class="wheel"/><circle cx="82" cy="66" r="12" class="wheel"/>
+      <text x="0" y="96" class="cap">car — feedback since week 2</text>
+    </g>
+  </g>
+</svg>

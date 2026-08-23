@@ -1,0 +1,55 @@
+---
+import { getSectionPages, getSections } from '../nav';
+
+interface Props {
+  section: string;
+}
+const { section } = Astro.props;
+
+const pages = await getSectionPages(section);
+const sections = await getSections();
+const heading = sections.find((s) => s.section === section);
+const path = Astro.url.pathname;
+---
+
+<nav class="sec" aria-label={heading ? `${heading.label} pages` : 'Section pages'}>
+  {heading && <p class="sec__label">{heading.label}</p>}
+  <ul>
+    {pages.map((p) => (
+      <li>
+        <a href={p.href} aria-current={path === p.href ? 'page' : undefined}>{p.label}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .sec { font-size: 0.9rem; }
+  .sec__label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 var(--space-2);
+    padding-left: 0.55rem;
+  }
+  .sec ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; border-left: 1px solid var(--line); }
+  .sec a {
+    display: block;
+    padding: 0.35rem 0.55rem;
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    color: var(--ink-soft);
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.18s var(--ease), background 0.18s var(--ease);
+  }
+  .sec a:hover { color: var(--ink); background: var(--bg-elev); }
+  .sec a[aria-current='page'] {
+    color: var(--accent-ink);
+    border-left-color: var(--accent);
+    background: var(--accent-wash);
+    font-weight: 500;
+  }
+</style>

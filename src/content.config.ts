@@ -1,46 +1,46 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const blog = defineCollection({
-  loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
+/**
+ * One markdown file per page, under src/content/docs/.
+ *
+ *   docs/home.md                      -> /
+ *   docs/<section>/index.md           -> /<section>/          (top-nav entry)
+ *   docs/<section>/<page>.md          -> /<section>/<page>/   (left-nav entry)
+ *
+ * `order` sorts sections in the top nav and pages within a section.
+ */
+const docs = defineCollection({
+  loader: glob({ base: './src/content/docs', pattern: '**/*.{md,mdx}' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    date: z.coerce.date(),
+    /** Shorter label for the navigation, when the title is too long for it. */
+    navLabel: z.string().optional(),
+    order: z.number(),
     updated: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+
+    /* Used by home.md only — the landing page renders these as real components. */
+    competencies: z.array(z.object({ label: z.string(), detail: z.string(), href: z.string() })).optional(),
+    skills: z.array(z.object({ area: z.string(), items: z.array(z.string()) })).optional(),
+    projects: z
+      .array(
+        z.object({
+          name: z.string(),
+          stack: z.string(),
+          blurb: z.string(),
+          page: z.string(),
+          repo: z.string().url(),
+          docs: z.string().url().optional(),
+        })
+      )
+      .optional(),
+    vitals: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
+    stats: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
+    starters: z.array(z.string()).optional(),
   }),
 });
 
-const projects = defineCollection({
-  loader: glob({ base: './src/content/projects', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    role: z.string().optional(),
-    year: z.string().optional(),
-    language: z.string().optional(),
-    stars: z.number().optional(),
-    tags: z.array(z.string()).default([]),
-    repo: z.string().url().optional(),
-    docs: z.string().url().optional(),
-    featured: z.boolean().default(false),
-    order: z.number().default(99),
-  }),
-});
-
-const resume = defineCollection({
-  loader: glob({ base: './src/content/resume', pattern: '**/*.{md,mdx}' }),
-  schema: z.object({
-    role: z.string(),
-    org: z.string(),
-    location: z.string().optional(),
-    start: z.string(),
-    end: z.string().default('Present'),
-    stack: z.array(z.string()).default([]),
-    order: z.number(),
-  }),
-});
-
-export const collections = { blog, projects, resume };
+export const collections = { docs };

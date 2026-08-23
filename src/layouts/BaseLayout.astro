@@ -7,19 +7,12 @@ import SiteFooter from '../components/SiteFooter.astro';
 interface Props {
   title?: string;
   description?: string;
-  /** Absolute or site-relative image for social cards. */
   image?: string;
   type?: 'website' | 'article';
   publishedAt?: Date;
 }
 
-const {
-  title,
-  description = site.tagline,
-  image = '/og-default.svg',
-  type = 'website',
-  publishedAt,
-} = Astro.props;
+const { title, description = site.tagline, image = '/og-default.svg', type = 'website', publishedAt } = Astro.props;
 
 const fullTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.role}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
@@ -34,7 +27,6 @@ const ogImage = new URL(image, Astro.site ?? site.url);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
     <meta name="generator" content={Astro.generator} />
 
     <meta property="og:type" content={type} />
@@ -49,7 +41,7 @@ const ogImage = new URL(image, Astro.site ?? site.url);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:SOFT,WONK,opsz,wght@0..100,0..1,9..144,300..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
     />
 
     <!-- Applied before first paint so the page never flashes the wrong theme or size. -->
@@ -68,9 +60,9 @@ const ogImage = new URL(image, Astro.site ?? site.url);
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <SiteHeader />
-    <main id="main" data-pagefind-body>
+    <div class="page-body">
       <slot />
-    </main>
+    </div>
     <SiteFooter />
   </body>
 </html>

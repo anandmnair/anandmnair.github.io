@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Feedback loop: build, release, observe, learn, adjust">
+  <style>
+    .t{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    .n{font-size:14px;font-weight:600;fill:#fff}
+    .sm{font-size:11.5px;fill:#5a6474}
+    .cap{font-size:13px;fill:#312e81;font-weight:600}
+    .q{font-size:12px;fill:#8892a0;font-style:italic}
+  </style>
+  <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><polygon points="0,0 8,4 0,8" fill="#818cf8"/></marker></defs>
+  <g class="t">
+    <circle cx="320" cy="176" r="118" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="5 6"/>
+    <path d="M320 58 A118 118 0 0 1 424 120" fill="none" stroke="#818cf8" stroke-width="2.5" marker-end="url(#ar)"/>
+    <path d="M432 148 A118 118 0 0 1 390 268" fill="none" stroke="#818cf8" stroke-width="2.5" marker-end="url(#ar)"/>
+    <path d="M356 288 A118 118 0 0 1 232 262" fill="none" stroke="#818cf8" stroke-width="2.5" marker-end="url(#ar)"/>
+    <path d="M210 236 A118 118 0 0 1 204 128" fill="none" stroke="#818cf8" stroke-width="2.5" marker-end="url(#ar)"/>
+    <path d="M218 104 A118 118 0 0 1 288 62" fill="none" stroke="#818cf8" stroke-width="2.5" marker-end="url(#ar)"/>
+    <g>
+      <rect x="272" y="34" width="96" height="34" rx="17" fill="#312e81"/>
+      <text class="n" x="320" y="56" text-anchor="middle">Build</text>
+      <rect x="418" y="112" width="104" height="34" rx="17" fill="#4338ca"/>
+      <text class="n" x="470" y="134" text-anchor="middle">Release</text>
+      <rect x="386" y="262" width="106" height="34" rx="17" fill="#4f46e5"/>
+      <text class="n" x="439" y="284" text-anchor="middle">Observe</text>
+      <rect x="152" y="262" width="94" height="34" rx="17" fill="#4f46e5"/>
+      <text class="n" x="199" y="284" text-anchor="middle">Learn</text>
+      <rect x="122" y="112" width="98" height="34" rx="17" fill="#4338ca"/>
+      <text class="n" x="171" y="134" text-anchor="middle">Adjust</text>
+    </g>
+    <text class="cap" x="320" y="168" text-anchor="middle">loop time</text>
+    <text class="q" x="320" y="190" text-anchor="middle">the only number</text>
+    <text class="q" x="320" y="208" text-anchor="middle">that matters</text>
+    <text class="sm" x="320" y="332" text-anchor="middle">shorten it, or the loop teaches you nothing before the context changes</text>
+  </g>
+</svg>

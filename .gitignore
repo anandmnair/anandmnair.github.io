@@ -6,3 +6,5 @@ dist/
 .env.production
 npm-debug.log*
 .idea/
+
+.temp/

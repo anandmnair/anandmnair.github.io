@@ -1,28 +1,25 @@
 /**
- * Single place for the details that show up all over the site.
- * Everything marked TODO is a placeholder — replace with your own copy.
+ * Site-wide details. Page content and the nav order live in
+ * src/content/pages/*.md — the nav is built from their `order` field.
  */
 export const site = {
-  name: 'Anand M Nair',
-  initials: 'AMN',
-  role: 'TODO — your title, e.g. "Principal Engineer, Java & Distributed Systems"',
-  tagline: 'TODO — one line about what you build and why it matters.',
-  intro:
-    'TODO — two or three sentences for the home page. What you work on, the kind of problems you like, and what a reader will find here.',
-  location: 'TODO — City, Country',
+  name: 'Anand Manissery',
+  initials: 'AM',
+  role: 'Technology Evangelist | Architect | Engineering Lead',
+  tagline: 'Open Source Contributor : Creator of couples of open source libraries in GitHub. Driving AI-Powered Digital Transformation through Domain-Driven Design, Distributed Systems, and Legacy Modernization. Mastering AI engineering and championing craftsmanship through continuous hands-on experimentation.',
+  location: 'Bangalore, India',
   email: 'anand.manissery@gmail.com',
   url: 'https://anandmnair.github.io',
-  /** Shown in the footer and on /about. Drop any you do not want. */
+  /** Site-wide work-in-progress notice. Set enabled: false when the writing is done. */
+  wip: {
+    enabled: true,
+    label: 'Draft',
+    note: 'Work in progress — this page is still being written and will change.',
+  },
   socials: [
     { label: 'GitHub', href: 'https://github.com/anandmnair' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/TODO' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/anandmanissery/' },
     { label: 'Email', href: 'mailto:anand.manissery@gmail.com' },
-  ],
-  nav: [
-    { label: 'Projects', href: '/projects/' },
-    { label: 'Writing', href: '/blog/' },
-    { label: 'Résumé', href: '/resume/' },
-    { label: 'About', href: '/about/' },
   ],
 };
 
