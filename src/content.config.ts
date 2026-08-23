@@ -22,7 +22,7 @@ const docs = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
 
-    /* Used by home.md only — the landing page renders these as real components. */
+    /* Used by home.md and projects/index.md — rendered as real components, not markdown. */
     competencies: z.array(z.object({ label: z.string(), detail: z.string(), href: z.string() })).optional(),
     skills: z.array(z.object({ area: z.string(), items: z.array(z.string()) })).optional(),
     projects: z

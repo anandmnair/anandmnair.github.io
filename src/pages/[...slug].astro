@@ -6,7 +6,7 @@ import { routeOf, sectionOf } from '../nav';
 export async function getStaticPaths() {
   const docs = await getCollection('docs', ({ data }) => !data.draft);
   return docs
-    .filter((d) => d.id !== 'home')
+    .filter((d) => d.id !== 'home' && d.id !== 'projects')
     .map((doc) => ({ params: { slug: routeOf(doc.id).replace(/^\/|\/$/g, '') }, props: { doc } }));
 }
 

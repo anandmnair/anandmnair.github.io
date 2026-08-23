@@ -1,0 +1,22 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import ProjectCards from '../../components/ProjectCards.astro';
+import { sectionOf } from '../../nav';
+
+const docs = await getCollection('docs', ({ data }) => !data.draft);
+const doc = docs.find((d) => d.id === 'projects')!;
+const { Content, headings } = await render(doc);
+---
+
+<DocsLayout
+  title={doc.data.title}
+  description={doc.data.description}
+  section={sectionOf(doc.id)}
+  updated={doc.data.updated}
+  tags={doc.data.tags}
+  headings={headings}
+>
+  <Content />
+  <ProjectCards projects={doc.data.projects ?? []} />
+</DocsLayout>

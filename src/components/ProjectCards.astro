@@ -1,0 +1,118 @@
+---
+interface Project {
+  name: string;
+  stack: string;
+  blurb: string;
+  page: string;
+  repo: string;
+  docs?: string;
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+
+const defaultCardIcon =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>';
+
+// Failover's own mark, pulled from its docs site (societe-generale.github.io/failover/web/assets/logo.svg).
+const projectIcons: Record<string, string> = {
+  Failover:
+    '<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#6366f1"/><path d="M26 20 h48 v16 H44 v12 h26 v14 H44 v18 H26 Z" fill="#fff"/><circle cx="76" cy="72" r="7" fill="#a5b4fc"/></svg>',
+  'RabbitMQ Advanced Spring Boot Starter':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h13l3 3-3 3H4z"/><path d="M4 17h13l3-3"/></svg>',
+  'Failover Demo':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor" stroke="none"/></svg>',
+  AIDLC:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 3z"/></svg>',
+  'KnowledgeBase Platform':
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8.1 7.2 10 15.5M15.9 7.2 14 15.5M8.4 6h7.2"/></svg>',
+};
+---
+
+<div class="projects">
+  {projects.map((p) => (
+    <article class="proj">
+      <div class="proj__top">
+        <span class="proj__icon" set:html={projectIcons[p.name] ?? defaultCardIcon} />
+        <h3 class="proj__name"><a href={p.page}>{p.name}</a></h3>
+        <svg class="proj__arrow" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 18 18 6M9 6h9v9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <p class="proj__stack">{p.stack.split(' · ').map((s) => <span>{s}</span>)}</p>
+      <p class="proj__blurb">{p.blurb}</p>
+      <p class="proj__links">
+        <a href={p.repo} rel="noopener">Repository</a>
+        {p.docs && <a href={p.docs} rel="noopener">Docs</a>}
+        <a class="proj__more" href={p.page}>Read more</a>
+      </p>
+    </article>
+  ))}
+</div>
+
+<style>
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-3); }
+  .proj {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: var(--space-3);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elev);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+  .proj::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent 70%);
+    transform: scaleX(0.18);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .proj:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent); }
+  .proj:hover::before { transform: scaleX(1); }
+
+  .proj__top { display: flex; align-items: center; gap: 0.55rem; }
+  .proj__icon { flex: none; width: 22px; height: 22px; color: var(--accent-ink); border-radius: 5px; overflow: hidden; }
+  .proj__icon svg { width: 100%; height: 100%; display: block; }
+  .proj__name { margin: 0; margin-right: auto; font-size: var(--step-1); line-height: 1.2; }
+  .proj__name a { color: inherit; text-decoration: none; }
+  .proj__name a::after { content: ''; position: absolute; inset: 0; }
+  .proj:hover .proj__name a { color: var(--accent-ink); }
+  .proj__arrow { width: 16px; height: 16px; flex: none; color: var(--muted); transition: color 0.2s var(--ease), transform 0.25s var(--ease); }
+  .proj:hover .proj__arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+  .proj__stack { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0; }
+  .proj__stack span {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.04em;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    background: var(--bg-sunken);
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+  .proj__blurb { margin: 0; flex: 1; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.55; }
+  .proj__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.9rem;
+    margin: var(--space-2) 0 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line);
+    font-size: 0.82rem;
+    position: relative;
+    z-index: 1;
+  }
+  .proj__more { margin-left: auto; font-family: var(--font-mono); font-size: 0.72rem; }
+</style>
