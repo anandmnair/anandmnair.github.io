@@ -64,10 +64,26 @@ tables to "aggregates", and declaring victory. The result is the same anaemic
 model with new vocabulary.
 
 A domain model expresses **what the business does** — the process, its rules,
-its invariants, the decisions it makes. If your domain objects are getters and
-setters and all behaviour lives in a service class, you have written a
-transaction script and called it DDD. Sometimes a transaction script is the
-right answer; just do not confuse the two.
+its invariants, the decisions it makes. Anaemic model means domain objects are
+getters/setters and *all* behaviour got pushed out — that is the failure, not
+the existence of a service class. Split it clean, three kinds:
 
-Rule of thumb: **if the domain layer imports anything from the framework, the
-boundary has already failed.**
+- **Domain object** (entity, value object, aggregate) — holds its own
+  invariants and rules. Anything a single object can decide by itself belongs
+  here, not in a service.
+- **Domain service** — for logic that needs multiple domain objects or several
+  collaborators (services, providers) to cooperate. Still business logic,
+  still lives in the domain layer, just orchestration instead of
+  single-object behaviour.
+- **Adapter** — infrastructure only: DB, HTTP, messaging, framework glue. No
+  business rules here, ever. If an adapter is deciding something instead of
+  translating something, logic leaked out of the domain.
+
+Sometimes a transaction script is the right answer — thin domain, all steps in
+one script. Fine, as long as it is a conscious choice, not business rules
+quietly leaking into an adapter or a service class doing decision-making that
+belongs on the domain object.
+
+That separation — where the domain model lives and what it may depend on — is
+a hexagonal architecture concern; see [Hexagonal
+Architecture](/craftsmanship/hexagonal-architecture/).
