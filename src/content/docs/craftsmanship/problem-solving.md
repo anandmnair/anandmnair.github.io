@@ -115,7 +115,7 @@ missing tool, an unavailable dataset, a dependency on a decision nobody owns.
 Adding engineers to a blocked programme produces more blocked engineers.
 
 One migration I worked on was quoted at three to five years. First instinct
-was to throw two or three more people at it. Turned out headcount had nothing
+was to put two or three more people on it. Turned out headcount had nothing
 to do with it — the real problem was that business rules had to be pulled out
 of existing systems and processes too tangled for anyone to actually finalise,
 and every time a rule changed, the team redid the entire migration of millions
