@@ -7,6 +7,10 @@ import { sectionOf } from '../../nav';
 const docs = await getCollection('docs', ({ data }) => !data.draft);
 const doc = docs.find((d) => d.id === 'projects')!;
 const { Content, headings } = await render(doc);
+
+const allProjects = doc.data.projects ?? [];
+const openSourceProjects = allProjects.filter((p) => p.badges?.includes('opensource'));
+const otherProjects = allProjects.filter((p) => !p.badges?.includes('opensource'));
 ---
 
 <DocsLayout
@@ -18,5 +22,8 @@ const { Content, headings } = await render(doc);
   headings={headings}
 >
   <Content />
-  <ProjectCards projects={doc.data.projects ?? []} />
+  <h2>Open Source</h2>
+  <ProjectCards projects={openSourceProjects} />
+  <h2>Products, POCs &amp; Experiments</h2>
+  <ProjectCards projects={otherProjects} />
 </DocsLayout>

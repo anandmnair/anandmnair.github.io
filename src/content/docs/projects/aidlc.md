@@ -1,7 +1,7 @@
 ---
 title: 'AIDLC'
 description: 'A tool-agnostic, agentic AI development life cycle — feed it a requirement in .md format, and a pipeline of specialist AI agents takes it from analysis to pull request.'
-order: 4
+order: 1
 ---
 
 **Agentic AI · TDD · Multi-tool Pipeline**

@@ -6,7 +6,17 @@ interface Project {
   page: string;
   repo: string;
   docs?: string;
+  year?: number;
+  badges?: ('poc' | 'product' | 'library' | 'opensource' | 'experimental')[];
 }
+
+const badgeLabels: Record<string, string> = {
+  poc: 'POC',
+  product: 'Product',
+  library: 'Library',
+  opensource: 'Open Source',
+  experimental: 'Experimental',
+};
 
 interface Props {
   projects: Project[];
@@ -43,6 +53,12 @@ const projectIcons: Record<string, string> = {
         </svg>
       </div>
       <p class="proj__stack">{p.stack.split(' · ').map((s) => <span>{s}</span>)}</p>
+      {(p.year || p.badges?.length) && (
+        <p class="proj__tags">
+          {p.year && <span class="proj__badge proj__badge--year">Since {p.year}</span>}
+          {p.badges?.map((b) => <span class={`proj__badge proj__badge--${b}`}>{badgeLabels[b]}</span>)}
+        </p>
+      )}
       <p class="proj__blurb">{p.blurb}</p>
       <p class="proj__links">
         <a href={p.repo} rel="noopener">Repository</a>
@@ -54,7 +70,7 @@ const projectIcons: Record<string, string> = {
 </div>
 
 <style>
-  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-3); }
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: var(--space-3); }
   .proj {
     display: flex;
     flex-direction: column;
@@ -100,6 +116,52 @@ const projectIcons: Record<string, string> = {
     background: var(--bg-sunken);
     border: 1px solid var(--line);
     color: var(--muted);
+  }
+  .proj__tags { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin: 0; }
+  .proj__badge {
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .proj__badge--year {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--muted);
+    background: var(--bg-sunken);
+    border-color: var(--line);
+  }
+  .proj__badge--poc {
+    color: var(--muted);
+    background: var(--bg-sunken);
+    border-color: var(--line-strong);
+  }
+  .proj__badge--experimental {
+    color: var(--muted);
+    background: transparent;
+    border-color: var(--line-strong);
+    border-style: dashed;
+  }
+  .proj__badge--product {
+    color: var(--accent-ink);
+    background: var(--accent-wash);
+    border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+  }
+  .proj__badge--library {
+    color: var(--lib-ink);
+    background: var(--lib-wash);
+    border-color: color-mix(in oklab, var(--lib-accent) 40%, transparent);
+  }
+  .proj__badge--opensource {
+    color: var(--os-ink);
+    background: var(--os-wash);
+    border-color: color-mix(in oklab, var(--os-accent) 40%, transparent);
   }
   .proj__blurb { margin: 0; flex: 1; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.55; }
   .proj__links {

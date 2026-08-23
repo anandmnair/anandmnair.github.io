@@ -1,7 +1,7 @@
 ---
 title: 'RabbitMQ Advanced Spring Boot Starter'
 description: 'Every team wiring up Spring AMQP writes the same code: exchange and queue declaration, retry policy, dead-letter routing, error handling, message conversion. Written fresh each'
-order: 2
+order: 12
 ---
 
 **Java · Spring Boot · RabbitMQ · Messaging**

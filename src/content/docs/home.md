@@ -68,6 +68,8 @@ projects:
     page: /projects/failover/
     repo: https://github.com/societe-generale/failover
     docs: https://societe-generale.github.io/failover/
+    year: 2022
+    badges: [library, opensource]
   - name: RabbitMQ Advanced Spring Boot Starter
     stack: Java · Spring Boot · RabbitMQ
     blurb: >-
@@ -77,6 +79,8 @@ projects:
     page: /projects/rabbitmq-advanced-spring-boot-starter/
     repo: https://github.com/societe-generale/rabbitmq-advanced-spring-boot-starter
     docs: https://societe-generale.github.io/rabbitmq-advanced-spring-boot-starter/
+    year: 2018
+    badges: [library, opensource]
   - name: Failover Demo
     stack: Java · Spring Boot · Demo
     blurb: >-
@@ -85,6 +89,8 @@ projects:
       as it happens.
     page: /projects/failover-demo/
     repo: https://github.com/societe-generale/failover-demo
+    year: 2022
+    badges: [opensource]
 vitals:
   - label: Experience
     value: 17+ years engineering mission-critical software systems.
@@ -101,11 +107,13 @@ vitals:
 stats:
   - value: '17+'
     label: years building software
-  - value: '3'
+  - value: '2'
     label: open-source libraries
-  - value: '100+'
-    label: services depending on those libraries
-  - value: '12'
+  - value: '50+'
+    label: Overall repositories in GitHub
+  - value: 'X'
+    label: technical articles    
+  - value: 'X'
     label: sections of working notes
 starters:
   - /craftsmanship/

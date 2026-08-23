@@ -1,7 +1,7 @@
 ---
 title: 'KnowledgeBase Platform'
 description: 'Turns code repositories into a queryable knowledge base — ask natural-language questions at repository, application, or workspace scope and get grounded, cited answers.'
-order: 5
+order: 2
 ---
 
 **Java · Spring Boot · RAG**
