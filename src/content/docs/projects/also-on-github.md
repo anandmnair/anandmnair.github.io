@@ -1,7 +1,7 @@
 ---
 title: 'Also on GitHub'
 description: 'My GitHub profile(https://github.com/anandmnair) carries the smaller things — Spring Cloud and Eureka experiments, Spring Data JPA samples, Java language feature explorations.'
-order: 4
+order: 6
 ---
 
 My [GitHub profile](https://github.com/anandmnair) carries the smaller
