@@ -1,7 +1,12 @@
 ---
 title: 'Modernising the code, not just the runtime'
-description: 'A containerised monolith on Kubernetes is a monolith with a higher hosting bill. The internal changes that'
+description: >-
+  A containerised monolith on Kubernetes is a monolith with a higher hosting bill. The internal
+  changes that matter: find the boundaries with event storming, modularise in place with
+  architecture tests, write characterisation tests before changing anything, and replace the
+  data coupling.
 order: 6
+cardBadges: ['Event Storming', 'Characterisation Tests']
 ---
 
 A containerised monolith on Kubernetes is a monolith with a higher hosting bill.

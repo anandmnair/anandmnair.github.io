@@ -185,7 +185,14 @@ const skillItemIcons: Record<string, string> = {
         <div class="hero__text">
           <p class="eyebrow">{[site.role, site.location].filter(Boolean).join(' · ')}</p>
           <h1 class="hero__name">{site.name}</h1>
-          <p class="hero__line">{site.tagline}</p>
+          <p class="hero__line">
+            {site.taglineLines.map((line, i) => (
+              <>
+                {i > 0 && <br />}
+                {line}
+              </>
+            ))}
+          </p>
           <div class="hero__cta">
             {site.socials.map((s, i) => (
               <a class:list={['btn', { 'btn--primary': i === 0 }]} href={s.href} rel="me noopener">{s.label}</a>

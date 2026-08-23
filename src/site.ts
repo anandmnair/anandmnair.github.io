@@ -6,7 +6,10 @@ export const site = {
   name: 'Anand Manissery',
   initials: 'AM',
   role: 'Technology Evangelist | Architect | Engineering Lead',
-  tagline: 'Open Source Contributor : Creator of couples of open source libraries in GitHub. Driving AI-Powered Digital Transformation through Domain-Driven Design, Distributed Systems, and Legacy Modernization. Mastering AI engineering and championing craftsmanship through continuous hands-on experimentation.',
+  taglineLines: [
+    'Open Source Contributor : Creator of open source libraries in GitHub.',
+    'Driving AI-Powered Digital Transformation through Domain-Driven Design, Distributed Systems, and Legacy Modernization.Mastering AI engineering and championing craftsmanship through continuous hands-on experimentation.'
+  ],
   location: 'Bangalore, India',
   email: 'anand.manissery@gmail.com',
   url: 'https://anandmnair.github.io',
@@ -22,5 +25,8 @@ export const site = {
     { label: 'Email', href: 'mailto:anand.manissery@gmail.com' },
   ],
 };
+
+/** Tagline as a single string — for meta description and other single-line uses. */
+export const tagline = site.taglineLines.join(' ');
 
 export type Site = typeof site;

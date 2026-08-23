@@ -57,6 +57,16 @@ projects:
     repo: https://github.com/anandmnair/document-extractor
     year: 2026
     badges: [poc]
+  - name: Failover Demo
+    stack: Java · Spring Boot · Demo
+    blurb: >-
+      The smallest complete example of the Failover library: an upstream that fails on
+      demand, a consumer annotated for failover, and the metrics showing the degradation
+      as it happens.
+    page: /projects/failover-demo/
+    repo: https://github.com/anandmnair/failover-demo
+    year: 2026
+    badges: [opensource]
   - name: Failover
     stack: Java · Spring Boot · Resilience
     blurb: >-
@@ -68,16 +78,6 @@ projects:
     docs: https://societe-generale.github.io/failover/
     year: 2022
     badges: [library, opensource]
-  - name: Failover Demo
-    stack: Java · Spring Boot · Demo
-    blurb: >-
-      The smallest complete example of the Failover library: an upstream that fails on
-      demand, a consumer annotated for failover, and the metrics showing the degradation
-      as it happens.
-    page: /projects/failover-demo/
-    repo: https://github.com/societe-generale/failover-demo
-    year: 2022
-    badges: [opensource]
   - name: REST Validation Demo
     stack: Java · Spring · Bean Validation
     blurb: >-

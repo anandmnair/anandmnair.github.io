@@ -1,7 +1,12 @@
 ---
 title: 'Deriving migration rules instead of collecting them'
-description: 'A pattern worth generalising. Migration projects frequently stall waiting for business users to hand-write transformation rules for legacy data — a task that is slow, incomplete,'
+description: >-
+  Instead of waiting for business users to hand-write transformation rules for legacy data,
+  derive them from the data itself and have humans review proposals rather than author rules
+  from scratch — a two-year roadmap delivered in six months by removing the bottleneck, not
+  adding people.
 order: 4
+cardBadges: ['Rule Derivation', 'Migration Tooling']
 ---
 
 A pattern worth generalising. Migration projects frequently stall waiting for

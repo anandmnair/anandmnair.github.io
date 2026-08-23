@@ -1,7 +1,11 @@
 ---
 title: 'Behaviour-Driven Development'
-description: 'BDD is TDD''s conversation moved outward — from "does this unit work" to "do we agree on what the system should'
+description: >-
+  BDD is TDD's conversation moved outward — from "does this unit work" to "do we agree on
+  what the system should do". Written with the business, in Gherkin, so ambiguity surfaces
+  while writing the scenario instead of during UAT.
 order: 5
+cardBadges: ['BDD', 'Gherkin']
 ---
 
 BDD is TDD's conversation moved outward — from "does this unit work" to **"do we

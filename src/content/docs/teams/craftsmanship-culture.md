@@ -1,6 +1,10 @@
 ---
 title: 'Craftsmanship culture'
-description: 'Culture is what happens when nobody is watching, and it is set by what gets rewarded rather than what gets'
+description: >-
+  Culture is what happens when nobody is watching, and it is set by what gets rewarded
+  rather than what gets stated. Visible quality metrics, shared libraries, and mentoring
+  as an expectation build it more reliably than any values statement.
+cardBadges: ['Culture', 'Mentoring']
 order: 4
 ---
 

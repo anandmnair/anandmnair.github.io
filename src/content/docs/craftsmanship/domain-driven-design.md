@@ -1,7 +1,11 @@
 ---
 title: 'Domain-Driven Design'
-description: 'Start at a whiteboard with the people who know the business, and write domain events on sticky notes — past tense, one per note: Order Placed, Credit Approved, Document Verified,'
+description: >-
+  Start at a whiteboard with the people who know the business and write domain events on
+  sticky notes, past tense, one per note. From event storming to bounded contexts to a domain
+  model that expresses what the business does, not a renamed database schema.
 order: 2
+cardBadges: ['Event Storming', 'Bounded Contexts']
 ---
 
 ### Event storming

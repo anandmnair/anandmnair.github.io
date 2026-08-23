@@ -1,6 +1,10 @@
 ---
 title: 'Scaling'
-description: 'Most scaling frameworks add coordination machinery. The alternative that has worked better for me: remove the need for'
+description: >-
+  Most scaling frameworks add coordination machinery. The alternative that has worked better:
+  remove the need for coordination — autonomous teams aligned on architecture and contracts
+  need far less process than dependent teams with excellent process.
+cardBadges: ['Team Autonomy', 'Bounded Contexts']
 order: 7
 ---
 

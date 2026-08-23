@@ -1,7 +1,11 @@
 ---
 title: 'Infrastructure as code'
-description: 'Because the alternative is a production environment nobody can reproduce. Manual configuration produces drift, drift produces the environment-specific bug, and the'
+description: >-
+  Because the alternative is a production environment nobody can reproduce. Manual
+  configuration produces drift, drift produces the environment-specific bug, and that bug
+  is the one that takes three days.
 order: 6
+cardBadges: ['Infrastructure as Code', 'Terraform']
 ---
 
 ### Why

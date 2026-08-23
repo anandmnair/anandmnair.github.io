@@ -1,7 +1,10 @@
 ---
 title: 'Azure'
-description: 'The platform decisions that shape everything'
+description: >-
+  The platform decisions that shape everything above: AKS, Azure DevOps or GitHub
+  Actions, Key Vault for secrets, and managed identities over connection strings.
 order: 3
+cardBadges: ['Azure', 'AKS', 'Key Vault']
 ---
 
 The platform decisions that shape everything above:

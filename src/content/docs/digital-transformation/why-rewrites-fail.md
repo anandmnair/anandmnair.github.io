@@ -1,7 +1,11 @@
 ---
 title: 'Why rewrites fail'
-description: 'The big-bang rewrite is attempted repeatedly and fails for consistent'
+description: >-
+  The big-bang rewrite is attempted repeatedly and fails for consistent reasons: undocumented
+  behaviour, a business that will not stop changing, value that arrives only at the end, and an
+  all-or-nothing cutover. The alternative is incremental and reversible.
 order: 1
+cardBadges: ['Big-Bang Rewrite', 'Incremental Migration']
 ---
 
 The big-bang rewrite is attempted repeatedly and fails for consistent reasons:

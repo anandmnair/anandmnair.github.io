@@ -5,6 +5,7 @@ navLabel: 'Digital Transformation'
 order: 4
 tags: ['modernisation', 'legacy', 'migration', 'cloud']
 updated: 2026-08-23
+cards: true
 ---
 Most modernisation work is not greenfield. It is a system that runs the business,
 cannot stop, has decades of accumulated behaviour, and must become something else

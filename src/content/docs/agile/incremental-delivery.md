@@ -1,6 +1,10 @@
 ---
 title: 'Incremental delivery'
-description: 'Build the system in slices that each stand alone. Not phases — a phase delivers nothing until it completes, and teaches nothing until then'
+description: >-
+  Build the system in slices that each stand alone, not phases — a phase delivers nothing
+  until it completes. Slice vertically through the whole stack, and sequence by risk rather
+  than ease, so the riskiest assumption gets tested while course-correction is still cheap.
+cardBadges: ['Vertical Slicing', 'Risk-First Sequencing']
 order: 2
 ---
 

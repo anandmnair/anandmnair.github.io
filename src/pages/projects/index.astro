@@ -21,9 +21,9 @@ const otherProjects = allProjects.filter((p) => !p.badges?.includes('opensource'
   tags={doc.data.tags}
   headings={headings}
 >
-  <Content />
   <h2>Open Source</h2>
   <ProjectCards projects={openSourceProjects} />
   <h2>Products, POCs &amp; Experiments</h2>
   <ProjectCards projects={otherProjects} />
+  <Content />
 </DocsLayout>

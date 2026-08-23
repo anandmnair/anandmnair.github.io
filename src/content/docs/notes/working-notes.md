@@ -2,6 +2,7 @@
 title: 'Working notes'
 description: 'Short pieces that do not warrant their own page'
 order: 2
+cardBadges: ['Event Sourcing', 'Kafka', 'Testcontainers']
 ---
 
 Short pieces that do not warrant their own page yet:

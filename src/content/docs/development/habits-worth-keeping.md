@@ -1,7 +1,11 @@
 ---
 title: 'Habits worth keeping'
-description: ''
+description: >-
+  Commit small, run the tests before reading the code, keep a human-written core for the
+  hardest domain decisions, and notice the moment you have stopped actually reading what
+  the model wrote.
 order: 5
+cardBadges: ['Code Review', 'Small Commits']
 ---
 
 - **Commit small.** Generated changes are easy to make large. Resist.

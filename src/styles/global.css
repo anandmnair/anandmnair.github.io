@@ -280,6 +280,12 @@ blockquote {
   border-radius: 999px;
   color: var(--muted);
   white-space: nowrap;
+  transition: transform 0.15s var(--ease), border-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+.tag:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .btn {

@@ -1,7 +1,11 @@
 ---
 title: 'What actually decides it'
-description: 'Modernisation programmes are rarely lost on'
+description: >-
+  Modernisation programmes are rarely lost on technology. What actually decides it: sponsorship
+  that outlasts the first setback, a visible early win, the team that will operate it building
+  it, and honesty about what to retire.
 order: 7
+cardBadges: ['Sponsorship', 'Programme Delivery']
 ---
 
 Modernisation programmes are rarely lost on technology.

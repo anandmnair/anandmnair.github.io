@@ -1,7 +1,11 @@
 ---
 title: 'Review'
-description: 'Review is a design conversation, not a defect hunt. If the first time a reviewer sees an approach is in a completed pull request, the review is too late — the author has sunk days'
+description: >-
+  Review is a design conversation, not a defect hunt. If the first time a reviewer sees an
+  approach is in a completed pull request, the review is too late — small pull requests,
+  questions instead of instructions, and automation for everything that isn't judgement.
 order: 10
+cardBadges: ['Code Review', 'Small PRs']
 ---
 
 Review is a design conversation, not a defect hunt. If the first time a reviewer

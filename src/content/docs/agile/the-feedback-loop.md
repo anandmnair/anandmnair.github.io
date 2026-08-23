@@ -1,6 +1,10 @@
 ---
 title: 'The feedback loop'
-description: 'Build → release → observe → learn →'
+description: >-
+  Build → release → observe → learn → adjust. The loop's value is inversely proportional to
+  its length, and "observe" is the step most often missing — a team that releases fortnightly
+  but doesn't know what happened after has an output cadence, not a feedback loop.
+cardBadges: ['Feedback Loop', 'Observability']
 order: 3
 ---
 

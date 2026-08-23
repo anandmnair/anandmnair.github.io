@@ -1,6 +1,10 @@
 ---
 title: 'The long version'
-description: 'I have been writing software for 17+ years, almost all of it on systems where failure is expensive and change is constant — high transaction volumes, strict regulatory'
+description: >-
+  17+ years building software where failure is expensive and change is
+  constant — from core Java and messaging infrastructure through microservices
+  decomposition to event-driven architecture and agentic AI today.
+cardBadges: ['Domain-Driven Design', 'Event-Driven Architecture']
 order: 1
 ---
 

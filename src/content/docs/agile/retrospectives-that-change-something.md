@@ -1,6 +1,10 @@
 ---
 title: 'Retrospectives that change something'
-description: 'A retrospective that produces observations is a discussion. A retrospective that produces one owned, dated, specific change is a feedback loop applied to the team'
+description: >-
+  A retrospective that produces observations is a discussion. One that produces one owned,
+  dated, specific change is a feedback loop applied to the team itself — one change beats
+  eight attempted at once, which is how teams learn retrospectives don't work.
+cardBadges: ['Retrospectives', 'Continuous Improvement']
 order: 6
 ---
 

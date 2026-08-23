@@ -1,7 +1,11 @@
 ---
 title: 'Event-driven architecture'
-description: 'Request/response couples the caller to the callee: the caller must know who to call, and must be up at the same moment. Every new consumer of a business fact means changing the'
+description: >-
+  Request/response couples caller to callee; events invert that by letting the producer state
+  what happened and consumers decide what it means to them. When to reach for events over APIs,
+  what a well-formed event looks like, and the practical costs of event sourcing.
 order: 2
+cardBadges: ['Event Sourcing', 'Sagas']
 ---
 
 ### Why event-driven

@@ -1,6 +1,10 @@
 ---
 title: 'Hiring'
-description: 'Most technical hiring measures the wrong things: puzzle-solving under observation, memorised algorithms, and the interviewer''s'
+description: >-
+  Most technical hiring measures the wrong things: puzzle-solving under observation,
+  memorised algorithms, and the interviewer's mood. Skills-based assessment — a rubric
+  written in advance, applied consistently — fixes that.
+cardBadges: ['Skills-Based Hiring']
 order: 2
 ---
 

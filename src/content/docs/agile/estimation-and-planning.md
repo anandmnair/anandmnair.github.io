@@ -1,6 +1,11 @@
 ---
 title: 'Estimation and planning'
-description: 'Estimates are forecasts, not commitments, and the accuracy of a forecast falls off sharply with distance. Estimate the next slice carefully, the quarter roughly, and the year'
+description: >-
+  Estimates are forecasts, not commitments, and accuracy falls off sharply with distance —
+  estimate the next slice carefully, the quarter roughly, and the year directionally. Slicing
+  beats estimating: cutting work into shippable pieces produces working software, not just a
+  number.
+cardBadges: ['Estimation', 'Slicing']
 order: 5
 ---
 

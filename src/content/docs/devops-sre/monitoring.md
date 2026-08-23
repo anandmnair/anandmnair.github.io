@@ -1,7 +1,10 @@
 ---
 title: 'Monitoring'
-description: 'The delivery-side counterpart to observability by design — that page covers what to instrument; this one covers where it'
+description: >-
+  The delivery-side counterpart to observability by design — that page covers what to
+  instrument, this one covers where it lands: logs, metrics, dashboards and tracing.
 order: 4
+cardBadges: ['Monitoring', 'Observability']
 ---
 
 The delivery-side counterpart to

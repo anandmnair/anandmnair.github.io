@@ -1,7 +1,11 @@
 ---
 title: 'Testing strategy'
-description: '!Test'
+description: >-
+  Wide and fast at the bottom, narrow and slow at the top. The test pyramid, TDD and BDD
+  answering different questions, mutation testing to check the tests actually check
+  something, and contract testing so independent deployment is real.
 order: 8
+cardBadges: ['Test Pyramid', 'Mutation Testing']
 ---
 
 ### The pyramid

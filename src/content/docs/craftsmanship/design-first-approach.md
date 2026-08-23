@@ -1,7 +1,11 @@
 ---
 title: 'Design-first approach'
-description: 'Design the contract before the implementation. In a distributed system the contract is the only thing your consumers can actually see, and it is the hardest thing to change once'
+description: >-
+  Design the contract before the implementation. In a distributed system the contract is the
+  only thing your consumers can actually see, and the hardest thing to change once they
+  depend on it — OpenAPI as the source of truth, not a generated export.
 order: 6
+cardBadges: ['OpenAPI', 'API Design']
 ---
 
 Design the contract before the implementation. In a distributed system the

@@ -1,6 +1,7 @@
 ---
 title: 'Elsewhere'
-description: ''
+description: 'Where to find me online — GitHub, LinkedIn, and email.'
+cardBadges: ['GitHub', 'LinkedIn']
 order: 5
 ---
 

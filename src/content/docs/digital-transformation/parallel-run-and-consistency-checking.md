@@ -1,7 +1,11 @@
 ---
 title: 'Parallel run and consistency checking'
-description: 'The technique that turns a terrifying migration into a boring'
+description: >-
+  The technique that turns a terrifying migration into a boring one: run old and new side by
+  side against production traffic, compare every response, and cut over only once the
+  difference rate reaches zero and stays there.
 order: 3
+cardBadges: ['Parallel Run', 'Consistency Checking']
 ---
 
 The technique that turns a terrifying migration into a boring one.
