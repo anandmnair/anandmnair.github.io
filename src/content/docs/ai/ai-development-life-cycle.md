@@ -1,7 +1,11 @@
 ---
 title: 'AI Development Life Cycle'
-description: 'The traditional life cycle assumes a human writes every line and a human reviews every line. Once a model writes most of the first draft, the cost structure changes: producing'
+description: >-
+  Once a model drafts the first pass, review — not typing — becomes the bottleneck. Four
+  maturity levels, from autocomplete to agentic, and one rule that survives all of them:
+  the engineer owns every line.
 order: 1
+cardBadges: ['Agentic Pipeline', 'Human-in-the-Loop']
 ---
 
 The traditional life cycle assumes a human writes every line and a human reviews

@@ -1,7 +1,11 @@
 ---
 title: 'LLMs & frameworks'
-description: 'Untested prompts are untested code. Build a small evaluation set early — representative inputs with known-good outputs — and run it on every prompt change. Without it, "the new'
+description: >-
+  Claude and GPT behind a pluggable provider registry, Python for pipelines, pgvector for
+  retrieval. Untested prompts are untested code — a small evaluation set run on every prompt
+  change is the whole quality process.
 order: 4
+cardBadges: ['Claude', 'pgvector']
 ---
 
 - **Models** — Claude (Anthropic), GPT (OpenAI). Model choice matters less than

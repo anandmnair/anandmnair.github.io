@@ -21,6 +21,10 @@ const docs = defineCollection({
     updated: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    /** Tech/topic badges shown on this page's card when its section index renders cards. */
+    cardBadges: z.array(z.string()).optional(),
+    /** Section index only: render its child pages as a card grid below the intro text. */
+    cards: z.boolean().default(false),
 
     /* Used by home.md and projects/index.md — rendered as real components, not markdown. */
     competencies: z.array(z.object({ label: z.string(), detail: z.string(), href: z.string() })).optional(),
