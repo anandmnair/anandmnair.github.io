@@ -3,7 +3,7 @@ title: 'Projects'
 description: 'Open-source libraries, products, and proofs of concept I have built — what problem each one solves, and where to read the code.'
 navLabel: 'Projects'
 order: 2
-tags: ['open-source', 'product', 'poc', 'experimental']
+tags: ['open-source', 'product', 'library', 'poc', 'experimental', 'demo']
 updated: 2026-08-23
 projects:
   - name: AIDLC
