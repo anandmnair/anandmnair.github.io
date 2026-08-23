@@ -88,8 +88,8 @@ projects:
       demand, a consumer annotated for failover, and the metrics showing the degradation
       as it happens.
     page: /projects/failover-demo/
-    repo: https://github.com/societe-generale/failover-demo
-    year: 2022
+    repo: https://github.com/anandmnair/failover-demo
+    year: 2026
     badges: [opensource]
 vitals:
   - label: Experience

@@ -1,7 +1,11 @@
 ---
 title: 'SRE'
-description: 'DevOps is the culture — shared ownership of build and run. SRE is the engineering discipline that makes reliability measurable rather than'
+description: >-
+  DevOps is the culture — shared ownership of build and run. SRE is the engineering
+  discipline that makes reliability measurable rather than aspirational, through SLIs,
+  SLOs and an error budget that turns a recurring argument into arithmetic.
 order: 7
+cardBadges: ['SRE', 'Error Budget']
 ---
 
 DevOps is the culture — shared ownership of build and run. SRE is the

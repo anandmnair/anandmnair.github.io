@@ -5,7 +5,7 @@ description: >-
   maturity levels, from autocomplete to agentic, and one rule that survives all of them:
   the engineer owns every line.
 order: 1
-cardBadges: ['Agentic Pipeline', 'Human-in-the-Loop']
+cardBadges: ['Agentic Pipeline', 'Human Guardrail']
 ---
 
 The traditional life cycle assumes a human writes every line and a human reviews

@@ -1,7 +1,11 @@
 ---
 title: 'Test-Driven Development'
-description: 'TDD is a design technique that produces tests as a by-product. Teams that adopt it as a testing technique abandon it within a quarter, because as a pure testing technique it is'
+description: >-
+  TDD is a design technique that produces tests as a by-product — teams that adopt it as a
+  testing technique abandon it within a quarter. Red, green, refactor, and the design
+  pressure of hard-to-test code is the actual point.
 order: 4
+cardBadges: ['TDD', 'Red-Green-Refactor']
 ---
 
 TDD is a **design technique** that produces tests as a by-product. Teams that

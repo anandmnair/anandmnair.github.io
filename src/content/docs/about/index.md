@@ -5,5 +5,6 @@ navLabel: 'About'
 order: 12
 tags: ['about']
 updated: 2026-08-23
+cards: true
 ---
 

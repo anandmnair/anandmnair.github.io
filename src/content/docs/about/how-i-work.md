@@ -1,6 +1,9 @@
 ---
 title: 'How I work'
-description: ''
+description: >-
+  Copilot not autopilot, boundaries before frameworks, unblock before you
+  optimise — the working principles behind how I build and lead.
+cardBadges: ['Hexagonal Architecture', 'Craftsmanship']
 order: 2
 ---
 

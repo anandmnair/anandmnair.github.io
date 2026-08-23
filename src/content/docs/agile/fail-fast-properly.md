@@ -1,6 +1,11 @@
 ---
 title: 'Fail fast, properly'
-description: '"Fail fast" is routinely misread as permission to be sloppy. It means the opposite: engineer failures to be cheap and visible, so you can afford to discover them'
+description: >-
+  "Fail fast" is routinely misread as permission to be sloppy. It means the opposite: engineer
+  failures to be cheap and visible, so you can afford to discover them early — which takes
+  feature flags, automated tests, fast rollback, canaries, and psychological safety to raise
+  problems while they're still small.
+cardBadges: ['Fail Fast', 'Feature Flags']
 order: 4
 ---
 

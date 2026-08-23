@@ -1,7 +1,11 @@
 ---
 title: 'Tooling'
-description: 'The differentiator between teams is not which tool they bought. It is whether they encoded their own conventions into it — context files, reusable skill definitions, hooks and'
+description: >-
+  The differentiator between teams is not which tool they bought. It is whether they encoded
+  their own conventions into it — context files, reusable skill definitions, hooks and slash
+  commands.
 order: 3
+cardBadges: ['Claude Code', 'GitHub Copilot']
 ---
 
 | Tool | Where it fits |

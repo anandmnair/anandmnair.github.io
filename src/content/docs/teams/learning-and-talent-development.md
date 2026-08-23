@@ -1,6 +1,10 @@
 ---
 title: 'Learning and talent development'
-description: 'Skills decay, and the rate is currently accelerating. Treating capability development as an annual training budget is not a'
+description: >-
+  Skills decay, and the rate is currently accelerating. Treating capability development
+  as an annual training budget is not a strategy — structured onboarding, real learning
+  paths, and deliberate practice on actual domain problems are.
+cardBadges: ['Talent Development', 'Onboarding']
 order: 5
 ---
 

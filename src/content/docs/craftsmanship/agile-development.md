@@ -1,7 +1,11 @@
 ---
 title: 'Agile development'
-description: 'Real agile is one thing: incremental delivery with a real feedback loop. Everything else — ceremonies, boards, story points, velocity — is machinery serving that, and machinery'
+description: >-
+  Real agile is one thing: incremental delivery with a real feedback loop. Everything else —
+  ceremonies, boards, story points, velocity — is machinery serving that, and machinery
+  without the loop is theatre.
 order: 3
+cardBadges: ['Incremental Delivery', 'Vertical Slicing']
 ---
 
 ### Real agile

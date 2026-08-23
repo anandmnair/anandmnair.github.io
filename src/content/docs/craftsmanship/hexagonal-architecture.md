@@ -1,7 +1,11 @@
 ---
 title: 'Hexagonal architecture'
-description: 'Also called ports and adapters. One rule: dependencies point'
+description: >-
+  Also called ports and adapters. One rule: dependencies point inward — domain,
+  infrastructure and bootstrap kept apart, enforced with ArchUnit so the boundary can't
+  quietly erode one pragmatic exception at a time.
 order: 7
+cardBadges: ['Ports & Adapters', 'ArchUnit']
 ---
 
 Also called ports and adapters. One rule: **dependencies point inward.**

@@ -1,7 +1,11 @@
 ---
 title: 'Alerting'
-description: 'The hardest thing on this page to get right, and the thing most estates get wrong in the same direction: too many'
+description: >-
+  The hardest thing on this page to get right, and the thing most estates get wrong in
+  the same direction: too many alerts. Alert on symptoms not causes, give every alert an
+  action, and route by ownership.
 order: 5
+cardBadges: ['Alerting', 'Alert Fatigue']
 ---
 
 The hardest thing on this page to get right, and the thing most estates get

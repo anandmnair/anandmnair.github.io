@@ -1,7 +1,12 @@
 ---
 title: 'Problem solving'
-description: 'The first answer to "why did this break" is almost never the cause. It is the last thing that'
+description: >-
+  The first answer to "why did this break" is almost never the cause — five whys, a real
+  problem statement, and studying the problem before proposing a fix. Plus: think big, start
+  small, scale fast, and find the actual blocker before adding more people to a stalled
+  programme.
 order: 1
+cardBadges: ['Root Cause Analysis', 'Problem Framing']
 ---
 
 ### Five whys

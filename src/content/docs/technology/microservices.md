@@ -1,7 +1,12 @@
 ---
 title: 'Microservices'
-description: 'Microservices solve an organisational problem — independent teams shipping independently — by paying a technical cost: network calls, partial failure, eventual consistency,'
+description: >-
+  Microservices solve an organisational problem — independent teams shipping independently —
+  by paying a technical cost: network calls, partial failure, eventual consistency, distributed
+  debugging. Signals a service should (and should not) be extracted, plus service discovery,
+  availability, scalability, and CQRS.
 order: 1
+cardBadges: ['Microservices', 'CQRS']
 ---
 
 ### A balanced approach

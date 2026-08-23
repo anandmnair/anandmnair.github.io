@@ -1,6 +1,10 @@
 ---
 title: 'Methodology, honestly'
-description: 'Scrum, Kanban, SAFe, XP — these are frameworks for organising work. They are not agility, and adopting one does not produce it. Plenty of organisations run every ceremony'
+description: >-
+  Scrum, Kanban, SAFe, XP are frameworks for organising work, not agility itself — plenty of
+  organisations run every ceremony faithfully and still deliver on the same annual cadence as
+  before. The single test: when did user feedback last change what you were about to build?
+cardBadges: ['Agile Frameworks', 'Feedback Loop']
 order: 1
 ---
 

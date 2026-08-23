@@ -1,7 +1,7 @@
 ---
 title: 'Failover'
 description: 'External APIs fail. In a large service estate one failure becomes an outage for everyone downstream, and the usual answer — a circuit breaker — stops the cascade but still leaves'
-order: 6
+order: 7
 ---
 
 **Java · Spring Boot · Resilience**

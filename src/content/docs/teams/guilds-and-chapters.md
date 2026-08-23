@@ -1,6 +1,10 @@
 ---
 title: 'Guilds and chapters'
-description: 'The mechanism I keep returning to for spreading practice across teams without adding'
+description: >-
+  The mechanism I keep returning to for spreading practice across teams without adding
+  governance. A guild agrees standards in the open, among the people who will apply
+  them — which is why its output actually gets adopted.
+cardBadges: ['Guilds', 'Chapters']
 order: 3
 ---
 

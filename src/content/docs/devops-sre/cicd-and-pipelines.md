@@ -1,7 +1,11 @@
 ---
 title: 'CI/CD and pipelines'
-description: 'Two rules the whole thing depends'
+description: >-
+  Two rules the whole thing depends on: build once and promote the artefact, and put
+  the fastest, most likely failure first. Pipeline stages, deployment strategies, and the
+  step that gets skipped — practising the rollback.
 order: 2
+cardBadges: ['CI/CD', 'Blue-Green Deploy']
 ---
 
 **Continuous integration** means everyone merges to trunk frequently and the

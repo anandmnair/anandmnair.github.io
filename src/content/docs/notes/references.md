@@ -1,6 +1,9 @@
 ---
 title: 'References'
-description: ''
+description: >-
+  A working reading list across domain-driven design, architecture, craft and testing, and
+  delivery — organised by topic, kept short, updated as a book earns its place.
+cardBadges: ['DDD', 'Architecture', 'Testing']
 order: 1
 ---
 

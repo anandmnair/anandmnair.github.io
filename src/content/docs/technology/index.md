@@ -5,6 +5,7 @@ navLabel: 'Technology'
 order: 5
 tags: ['architecture', 'microservices', 'event-driven', 'cqrs']
 updated: 2026-08-23
+cards: true
 ---
 Architecture is the set of decisions that are expensive to reverse. This page
 covers the ones I keep being asked about, including the cases where the honest

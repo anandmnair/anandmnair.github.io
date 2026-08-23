@@ -1,6 +1,9 @@
 ---
 title: 'Transformation that lasts'
-description: 'Programmes end. What persists is what got'
+description: >-
+  Programmes end. What persists is what got embedded — changed defaults, the people
+  already working the way you want, and outcomes measured instead of activity.
+cardBadges: ['Change Management']
 order: 6
 ---
 

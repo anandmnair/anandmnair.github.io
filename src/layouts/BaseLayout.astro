@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site } from '../site';
+import { site, tagline } from '../site';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
@@ -12,7 +12,7 @@ interface Props {
   publishedAt?: Date;
 }
 
-const { title, description = site.tagline, image = '/og-default.svg', type = 'website', publishedAt } = Astro.props;
+const { title, description = tagline, image = '/og-default.svg', type = 'website', publishedAt } = Astro.props;
 
 const fullTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.role}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);

@@ -1,7 +1,11 @@
 ---
 title: 'Version control'
-description: 'Git, with a branching model chosen for how often you actually release rather than for how the last team did'
+description: >-
+  Git, with a branching model chosen for how often you actually release rather than
+  for how the last team did it. Trunk-based development with short-lived branches for
+  teams releasing frequently.
 order: 1
+cardBadges: ['Git', 'Trunk-Based Development']
 ---
 
 Git, with a branching model chosen for how often you actually release rather

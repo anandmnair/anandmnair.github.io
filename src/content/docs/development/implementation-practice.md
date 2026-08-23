@@ -1,7 +1,11 @@
 ---
 title: 'Implementation practice'
-description: ''
+description: >-
+  Give the model context deliberately, keep each task scoped to one coherent change, write
+  tests before the generated code rather than after, and read the diff instead of the
+  AI-written summary.
 order: 2
+cardBadges: ['TDD', 'Context Engineering']
 ---
 
 **Give context deliberately.** A model's output quality tracks the quality of

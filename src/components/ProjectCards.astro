@@ -106,7 +106,7 @@ const projectIcons: Record<string, string> = {
   .proj__arrow { width: 16px; height: 16px; flex: none; color: var(--muted); transition: color 0.2s var(--ease), transform 0.25s var(--ease); }
   .proj:hover .proj__arrow { color: var(--accent); transform: translate(2px, -2px); }
 
-  .proj__stack { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0; }
+  .proj__stack { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0; position: relative; z-index: 1; }
   .proj__stack span {
     font-family: var(--font-mono);
     font-size: 0.64rem;
@@ -116,8 +116,10 @@ const projectIcons: Record<string, string> = {
     background: var(--bg-sunken);
     border: 1px solid var(--line);
     color: var(--muted);
+    transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
   }
-  .proj__tags { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin: 0; }
+  .proj__stack span:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px currentColor inset; }
+  .proj__tags { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin: 0; position: relative; z-index: 1; }
   .proj__badge {
     font-size: 0.64rem;
     font-weight: 600;
@@ -127,7 +129,9 @@ const projectIcons: Record<string, string> = {
     border-radius: 999px;
     border: 1px solid transparent;
     white-space: nowrap;
+    transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
   }
+  .proj__badge:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px currentColor inset; }
   .proj__badge--year {
     font-family: var(--font-mono);
     font-weight: 500;

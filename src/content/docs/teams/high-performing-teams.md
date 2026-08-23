@@ -1,6 +1,10 @@
 ---
 title: 'High-performing teams'
-description: 'The characteristics that hold up across the teams I have seen'
+description: >-
+  The characteristics that hold up across the teams I have seen work: clear end-to-end
+  ownership, autonomy inside explicit constraints, psychological safety, a shared
+  definition of good, and enough slack to actually improve anything.
+cardBadges: ['Team Ownership', 'Psychological Safety']
 order: 1
 ---
 

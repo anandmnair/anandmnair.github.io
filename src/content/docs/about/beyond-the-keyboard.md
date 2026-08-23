@@ -1,6 +1,8 @@
 ---
 title: 'Beyond the keyboard'
-description: 'CHECK — a short human paragraph. Photography and photo restoration would fit here naturally if you want to use it; otherwise anything that is not code. Two or three sentences is'
+description: >-
+  A short, personal note — the one page on this site that is not about
+  architecture, code, or delivery.
 order: 3
 ---
 

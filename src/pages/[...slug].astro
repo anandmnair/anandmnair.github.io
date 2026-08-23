@@ -28,6 +28,10 @@ if (doc.data.cards) {
       badges: d.data.cardBadges,
     }));
 }
+
+const cardBadgeTags = cardItems.flatMap((c) => c.badges ?? []);
+const projectBadgeTags = (doc.data.projects ?? []).flatMap((p) => p.badges ?? []);
+const headerTags = [...new Set([...doc.data.tags, ...cardBadgeTags, ...projectBadgeTags])];
 ---
 
 <DocsLayout
@@ -35,10 +39,9 @@ if (doc.data.cards) {
   description={doc.data.description}
   section={sectionOf(doc.id)}
   updated={doc.data.updated}
-  tags={doc.data.tags}
+  tags={headerTags}
   headings={headings}
 >
-  <Content />
   {cardItems.length > 0 && <SectionCards items={cardItems} />}
   {doc.data.projects && doc.data.projects.length > 0 && (
     <>
@@ -46,4 +49,5 @@ if (doc.data.cards) {
       <ProjectCards projects={doc.data.projects} />
     </>
   )}
+  <Content />
 </DocsLayout>

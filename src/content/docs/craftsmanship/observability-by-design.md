@@ -1,7 +1,12 @@
 ---
 title: 'Observability by design'
-description: 'Observability is a design constraint, not a dashboard you add before go-live. The question it answers is: when this misbehaves at 3am, can someone who did not write it work out'
+description: >-
+  Observability is a design constraint, not a dashboard you add before go-live. The question
+  it answers: when this misbehaves at 3am, can someone who did not write it work out why?
+  Logs, functional and technical monitoring, tracing, and resilience that minimises blast
+  radius rather than pretending failure won't happen.
 order: 11
+cardBadges: ['Observability', 'Resilience']
 ---
 
 Observability is a design constraint, not a dashboard you add before go-live.

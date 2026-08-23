@@ -1,7 +1,11 @@
 ---
 title: 'Strangler fig'
-description: 'Route traffic through a façade. Move one capability at a time behind it. The new system grows around the old one until the old one carries nothing and is switched'
+description: >-
+  Route traffic through a façade and move one capability at a time behind it. The new system
+  grows around the old one until the old one carries nothing and is switched off — value from
+  the first capability, risk confined to one at a time, a reverse gear at every step.
 order: 2
+cardBadges: ['Strangler Fig', 'Incremental Cutover']
 ---
 
 Route traffic through a façade. Move one capability at a time behind it. The new

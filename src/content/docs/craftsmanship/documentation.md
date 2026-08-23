@@ -1,7 +1,11 @@
 ---
 title: 'Documentation'
-description: 'Every system carries decisions whose reasoning is invisible in the code. Six months later the reasoning is gone, and the next engineer either preserves a constraint that no longer'
+description: >-
+  Every system carries decisions whose reasoning is invisible in the code. Docs as code, ADRs
+  for the decisions worth remembering, and living documentation generated from things that
+  must stay true — so drift breaks the build instead of the docs going stale.
 order: 9
+cardBadges: ['ADR', 'Docs as Code']
 ---
 
 ### Why

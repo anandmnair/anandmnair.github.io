@@ -1,6 +1,7 @@
 ---
 title: 'Education'
-description: ''
+description: 'Master of Computer Applications, MS Ramaiah Institute of Technology (VTU), 2006–2009, 83% aggregate.'
+cardBadges: ['MCA', 'VTU']
 order: 4
 ---
 

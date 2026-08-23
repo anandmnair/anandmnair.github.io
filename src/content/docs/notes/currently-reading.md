@@ -1,6 +1,7 @@
 ---
 title: 'Currently reading'
-description: 'CHECK — keep this short and update it occasionally. Two or three items with a line each. It is the part of a personal site people return'
+description: 'Placeholder — nothing listed yet.'
+cardBadges: ['Reading List']
 order: 4
 ---
 

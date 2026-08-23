@@ -1,7 +1,12 @@
 ---
 title: 'Move to cloud'
-description: 'Lift-and-shift moves the problem to a more expensive place. Full re-architecture of everything at once is the big-bang rewrite with a new name. The workable path is'
+description: >-
+  Lift-and-shift moves the problem to a more expensive place, and a full rewrite is the
+  big-bang rewrite with a new name. The workable path is per-application triage — retire,
+  rehost, replatform, refactor, or replace — accelerated by a standardised framework built
+  once and reused.
 order: 5
+cardBadges: ['Cloud Migration', 'Twelve-Factor']
 ---
 
 Lift-and-shift moves the problem to a more expensive place. Full re-architecture
