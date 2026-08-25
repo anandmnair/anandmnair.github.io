@@ -1,0 +1,100 @@
+---
+---
+
+<div class="consent-banner" data-consent-banner hidden>
+  <p>Analytics cookies only. No ads, no tracking sold.</p>
+  <div class="consent-banner__actions">
+    <button type="button" class="btn btn--ghost" data-consent-reject>Reject</button>
+    <button type="button" class="btn btn--primary" data-consent-accept>Accept</button>
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const banner = document.querySelector('[data-consent-banner]');
+    if (!banner) return;
+
+    let stored = null;
+    try {
+      stored = localStorage.getItem('consent');
+    } catch {}
+
+    if (!stored) banner.removeAttribute('hidden');
+
+    const setConsent = (value) => {
+      try {
+        localStorage.setItem('consent', value);
+      } catch {}
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', { analytics_storage: value === 'granted' ? 'granted' : 'denied' });
+      }
+      banner.setAttribute('hidden', '');
+    };
+
+    banner.querySelector('[data-consent-accept]')?.addEventListener('click', () => setConsent('granted'));
+    banner.querySelector('[data-consent-reject]')?.addEventListener('click', () => setConsent('denied'));
+  })();
+</script>
+
+<style>
+  .consent-banner {
+    position: fixed;
+    left: var(--space-2);
+    bottom: var(--space-2);
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    max-width: 320px;
+    padding: var(--space-2);
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .consent-banner p {
+    flex: 1 1 180px;
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--ink-soft);
+  }
+
+  .consent-banner__actions {
+    display: flex;
+    gap: var(--space-1);
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .btn {
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius);
+    font-size: 0.78rem;
+    font-family: var(--font-body);
+    cursor: pointer;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .btn--primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .btn--ghost:hover {
+    background: var(--bg-sunken);
+  }
+
+  @media (max-width: 420px) {
+    .consent-banner {
+      left: var(--space-2);
+      right: var(--space-2);
+      max-width: none;
+    }
+  }
+</style>
