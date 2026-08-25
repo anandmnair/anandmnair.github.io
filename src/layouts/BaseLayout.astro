@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { site, tagline } from '../site';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
 
 interface Props {
   title?: string;
@@ -28,6 +29,28 @@ const ogImage = new URL(image, Astro.site ?? site.url);
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Consent Mode v2: default state, read before GTM loads so tags respect it on first fire. -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      var storedConsent = (() => {
+        try {
+          return localStorage.getItem('consent');
+        } catch {
+          return null;
+        }
+      })();
+      gtag('consent', 'default', {
+        analytics_storage: storedConsent === 'granted' ? 'granted' : 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        wait_for_update: 500,
+      });
+    </script>
 
     <!-- Google Tag Manager -->
     <script is:inline>
@@ -88,5 +111,6 @@ const ogImage = new URL(image, Astro.site ?? site.url);
       <slot />
     </div>
     <SiteFooter />
+    <ConsentBanner />
   </body>
 </html>
