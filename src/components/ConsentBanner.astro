@@ -19,11 +19,15 @@
       stored = localStorage.getItem('consent');
     } catch {}
 
-    if (!stored) banner.removeAttribute('hidden');
+    if (stored !== 'granted') banner.removeAttribute('hidden');
 
     const setConsent = (value) => {
       try {
-        localStorage.setItem('consent', value);
+        if (value === 'granted') {
+          localStorage.setItem('consent', 'granted');
+        } else {
+          localStorage.removeItem('consent');
+        }
       } catch {}
       if (typeof gtag === 'function') {
         gtag('consent', 'update', { analytics_storage: value === 'granted' ? 'granted' : 'denied' });
