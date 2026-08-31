@@ -17,6 +17,8 @@ const docs = defineCollection({
     description: z.string(),
     /** Shorter label for the navigation, when the title is too long for it. */
     navLabel: z.string().optional(),
+    /** Inline SVG markup (or an emoji) rendered immediately left of the page's <h1>. */
+    titleIcon: z.string().optional(),
     order: z.number(),
     updated: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),

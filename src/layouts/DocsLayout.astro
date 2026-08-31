@@ -7,6 +7,7 @@ import type { MarkdownHeading } from 'astro';
 
 interface Props {
   title: string;
+  titleIcon?: string;
   description: string;
   section: string;
   updated?: Date;
@@ -14,7 +15,7 @@ interface Props {
   headings?: MarkdownHeading[];
 }
 
-const { title, description, section, updated, tags = [], headings = [] } = Astro.props;
+const { title, titleIcon, description, section, updated, tags = [], headings = [] } = Astro.props;
 
 const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 const sections = await getSections();
@@ -38,7 +39,14 @@ const next = here > -1 && here < order.length - 1 ? order[here + 1] : undefined;
             {parent && <><span aria-hidden="true">/</span><a href={parent.href}>{parent.label}</a></>}
           </nav>
 
-          <h1>{title}</h1>
+          {titleIcon ? (
+            <div class="doc__title">
+              <span class="doc__icon" set:html={titleIcon} />
+              <h1>{title}</h1>
+            </div>
+          ) : (
+            <h1>{title}</h1>
+          )}
           <p class="lede">{description}</p>
 
           {site.wip.enabled && (
@@ -109,6 +117,10 @@ const next = here > -1 && here < order.length - 1 ? order[here + 1] : undefined;
   .crumbs a:hover { color: var(--accent-ink); }
 
   .doc__head { padding-bottom: var(--space-3); border-bottom: 1px solid var(--line); margin-bottom: var(--space-4); }
+  .doc__title { display: flex; align-items: center; gap: 0.6rem; }
+  .doc__title h1 { margin: 0; }
+  .doc__icon { flex: none; display: inline-flex; width: 2.4rem; height: 2.4rem; }
+  .doc__icon :global(svg) { width: 100%; height: 100%; }
   .doc__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: var(--space-3); }
   .doc__meta time { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.04em; }
 
@@ -188,6 +200,19 @@ const next = here > -1 && here < order.length - 1 ? order[here + 1] : undefined;
   }
 </style>
 
+<style is:global>
+  .prose .mermaid {
+    margin: var(--space-4) 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    text-align: center;
+    overflow-x: auto;
+  }
+  .prose .mermaid:not([data-processed]) { color: var(--muted); font-size: var(--step--1); }
+  .prose .mermaid svg { max-width: 100%; height: auto; }
+</style>
+
 <script is:inline>
   (() => {
     const links = [...document.querySelectorAll('.layout__toc a')];
@@ -205,5 +230,27 @@ const next = here > -1 && here < order.length - 1 ? order[here + 1] : undefined;
       { rootMargin: '-140px 0px -70% 0px', threshold: 0 }
     );
     targets.forEach((t) => obs.observe(t));
+  })();
+</script>
+
+<script is:inline>
+  (() => {
+    const blocks = [...document.querySelectorAll('pre.mermaid, .mermaid')];
+    if (!blocks.length) return;
+    const explicit = document.documentElement.getAttribute('data-theme');
+    const isDark = explicit
+      ? explicit === 'dark'
+      : matchMedia('(prefers-color-scheme: dark)').matches;
+    import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs')
+      .then(({ default: mermaid }) => {
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: 'strict',
+          theme: isDark ? 'dark' : 'neutral',
+          fontFamily: 'inherit',
+        });
+        return mermaid.run({ nodes: blocks });
+      })
+      .catch(() => {});
   })();
 </script>

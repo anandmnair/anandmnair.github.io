@@ -36,6 +36,7 @@ const headerTags = [...new Set([...doc.data.tags, ...cardBadgeTags, ...projectBa
 
 <DocsLayout
   title={doc.data.title}
+  titleIcon={doc.data.titleIcon}
   description={doc.data.description}
   section={sectionOf(doc.id)}
   updated={doc.data.updated}
