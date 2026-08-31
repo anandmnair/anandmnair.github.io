@@ -30,7 +30,7 @@ competencies:
     detail: Functional and technical monitoring, metrics, APM, self-healing
     href: /craftsmanship/observability-by-design/
   - label: AI development life cycle
-    detail: Copilot and Claude Code practice, adoption maturity, agentic workflows
+    detail: Agentic pipelines that ship reviewed, tested code — Claude Code and Copilot in daily practice
     href: /ai/
   - label: Engineering leadership
     detail: Guilds, craftsmanship culture, skills-based hiring, high-performing teams
