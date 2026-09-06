@@ -129,8 +129,9 @@
         css.rel = 'stylesheet';
         css.href = '/pagefind/pagefind-ui.css';
         document.head.appendChild(css);
-        const { PagefindUI } = await import('/pagefind/pagefind-ui.js');
-        new PagefindUI({ element: '#pagefind', showSubResults: true, showImages: false });
+        // pagefind-ui.js is an IIFE bundle that assigns window.PagefindUI; it has no ES export.
+        await import('/pagefind/pagefind-ui.js');
+        new window.PagefindUI({ element: '#pagefind', showSubResults: true, showImages: false });
       } catch {
         hint.hidden = false;
       }

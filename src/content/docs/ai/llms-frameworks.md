@@ -23,3 +23,25 @@ cardBadges: ['Claude', 'pgvector']
 Untested prompts are untested code. Build a small evaluation set early —
 representative inputs with known-good outputs — and run it on every prompt
 change. Without it, "the new prompt seems better" is the entire quality process.
+
+Make it a gate, not a ritual: the set runs in CI, a regression fails the build,
+and a prompt edit ships with its eval delta the way code ships with tests. **If
+you cannot test it, you cannot trust it in production** — and that holds for a
+prompt, a retrieval config and a fine-tune alike.
+
+### Tooling
+
+Frameworks change; the evaluation set is the part that keeps its value. Pick the
+lightest stack that covers your pipeline stages, and reach for a framework when a
+concrete need appears — streaming, tool routing, multi-step orchestration — not
+before.
+
+| Stage | Python | JVM |
+|---|---|---|
+| Orchestration | LangChain, LlamaIndex, plain SDK | Spring AI, LangChain4j |
+| Retrieval | LlamaIndex, `pgvector`, a dedicated store | Spring AI vector stores, `pgvector` |
+| Prompt / program tuning | DSPy | prompt templates under version control |
+| Evaluation | promptfoo, ragas, `pytest` | JUnit over a fixture set, promptfoo (CLI) |
+
+Start with the vendor SDK and a folder of test cases. Get hands-on with the
+models first — the abstraction you pick matters less than knowing what it hides.
