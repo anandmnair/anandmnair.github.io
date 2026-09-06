@@ -62,3 +62,31 @@ projects:
 AI changed how software gets written before it changed what software does. Both
 matter, and they need different disciplines — one is an engineering practice
 question, the other an architecture question.
+
+## Practice and architecture
+
+- **How code gets written** — the
+  [AI development life cycle](/ai/ai-development-life-cycle/) and the
+  [models and frameworks](/ai/llms-frameworks/) behind it. The engineer owns
+  every line; review, not typing, is the bottleneck.
+- **What the software does** — [automation](/ai/automation/) and
+  [agentic use cases](/ai/agentic-use-cases/). Where a probabilistic component
+  earns its place in a system that still has to be correct.
+
+## Principles
+
+The rules that survive contact with a real pipeline:
+
+- **AI is probabilistic — design for it.** Assume confident wrong answers and
+  build the system that catches them.
+- **Deterministic validation is first-class.** Testable, versioned, owned — the
+  same bar as any other production code.
+- **Never block the business process.** If the model is wrong or unavailable,
+  the work falls back to a human and keeps moving.
+- **Maker–checker.** The model proposes; deterministic rules and, where needed,
+  a human dispose.
+- **Close the loop.** Human corrections feed back into prompts and rules —
+  improvement by design, not a rising tide of escalations.
+
+See [automation](/ai/automation/) for these worked through on a
+document-verification pipeline.
