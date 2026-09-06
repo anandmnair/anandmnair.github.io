@@ -38,7 +38,55 @@ application entry point. It knows about everything; nothing knows about it.
 Keeping bootstrap separate from infrastructure is what stops "just autowire it
 here" from quietly reintroducing the coupling you removed.
 
-![Hexagonal architecture](/img/hexagonal.svg)
+<figure class="diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-label="Hexagonal architecture: domain core, ports, infrastructure adapters, bootstrap">
+  <style>
+    .t { font-family: inherit; }
+    .h1 { font-size: 17px; font-weight: 700; fill: var(--bg, #ffffff); }
+    .h2 { font-size: 13px; font-weight: 600; fill: var(--ink-soft, #475569); }
+    .sm { font-size: 11.5px; fill: var(--ink-soft, #475569); }
+    .core-sm { font-size: 11.5px; fill: var(--bg, #ffffff); opacity: 0.72; }
+    .port { font-size: 10.5px; fill: var(--accent-ink, #4338ca); font-weight: 600; }
+    .cap { font-size: 12px; fill: var(--muted, #64748b); }
+    .shell { fill: none; stroke: var(--line, #e0e4f0); stroke-width: 1.5; stroke-dasharray: 6 5; }
+    .infra { fill: var(--bg-elev, #f7f8fc); stroke: var(--accent, #4f46e5); stroke-width: 2; }
+    .core { fill: var(--accent, #4f46e5); }
+    .port-dot { fill: var(--bg, #ffffff); stroke: var(--accent-ink, #4338ca); stroke-width: 2.5; }
+    .wire { stroke: var(--accent, #4f46e5); stroke-width: 1.5; }
+  </style>
+  <defs><marker id="hx-a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0,0 7,3.5 0,7" fill="var(--accent, #4f46e5)"/></marker></defs>
+  <g class="t">
+    <rect class="shell" x="40" y="26" width="560" height="388" rx="10"/>
+    <text class="cap" x="56" y="48">bootstrap — wiring, configuration, entry point</text>
+    <polygon class="infra" points="320,86 452,162 452,314 320,390 188,314 188,162"/>
+    <text class="h2" x="320" y="118" text-anchor="middle">infrastructure — adapters</text>
+    <polygon class="core" points="320,146 412,199 412,305 320,358 228,305 228,199"/>
+    <text class="h1" x="320" y="245" text-anchor="middle">DOMAIN</text>
+    <text class="core-sm" x="320" y="268" text-anchor="middle">rules · entities · events</text>
+    <text class="core-sm" x="320" y="286" text-anchor="middle">no framework</text>
+    <circle class="port-dot" cx="320" cy="146" r="6"/>
+    <circle class="port-dot" cx="412" cy="199" r="6"/>
+    <circle class="port-dot" cx="412" cy="305" r="6"/>
+    <circle class="port-dot" cx="320" cy="358" r="6"/>
+    <circle class="port-dot" cx="228" cy="305" r="6"/>
+    <circle class="port-dot" cx="228" cy="199" r="6"/>
+    <text class="port" x="320" y="136" text-anchor="middle">port</text>
+    <text class="sm" x="474" y="180">REST controllers</text>
+    <text class="sm" x="474" y="204">Kafka consumers</text>
+    <text class="sm" x="474" y="300">JPA repositories</text>
+    <text class="sm" x="474" y="324">API clients</text>
+    <text class="sm" x="166" y="180" text-anchor="end">scheduler</text>
+    <text class="sm" x="166" y="204" text-anchor="end">CLI</text>
+    <text class="sm" x="166" y="300" text-anchor="end">file store</text>
+    <text class="sm" x="166" y="324" text-anchor="end">cache</text>
+    <path class="wire" d="M470 190 L424 197" marker-end="url(#hx-a)"/>
+    <path class="wire" d="M470 306 L424 304" marker-end="url(#hx-a)"/>
+    <path class="wire" d="M170 190 L216 197" marker-end="url(#hx-a)"/>
+    <path class="wire" d="M170 306 L216 304" marker-end="url(#hx-a)"/>
+    <text class="cap" x="320" y="412" text-anchor="middle">dependencies point inward — always</text>
+  </g>
+</svg>
+</figure>
 
 ### Enforce it with tests
 
