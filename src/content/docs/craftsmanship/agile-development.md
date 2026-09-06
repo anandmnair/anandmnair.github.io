@@ -91,7 +91,9 @@ nothing until they meet.
     .sb-ink { fill: none; stroke: var(--ink-soft, #475569); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
     .sb-wheel { fill: var(--bg-elev, #f7f8fc); stroke: var(--ink-soft, #475569); stroke-width: 2.2; }
     .sb-ghost { fill: none; stroke: var(--ink-soft, #475569); stroke-width: 2; stroke-dasharray: 4 4; }
-    .sb-good { fill: var(--accent, #4f46e5); fill-opacity: 0.22; stroke: var(--accent, #4f46e5); stroke-width: 2.2; }
+    .sb-good { fill: var(--accent, #4f46e5); fill-opacity: 0.22; stroke: var(--accent, #4f46e5); stroke-width: 2.2; stroke-linejoin: round; }
+    .sb-glass { fill: var(--bg-elev, #f7f8fc); stroke: var(--accent, #4f46e5); stroke-width: 1.4; }
+    .sb-hub { fill: var(--accent, #4f46e5); }
     .sb-chev { fill: none; stroke: var(--accent, #4f46e5); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; animation: sb-nudge 1.8s ease-in-out infinite; }
     @keyframes sb-nudge { 0%, 100% { transform: translateX(-3px); opacity: 0.5; } 50% { transform: translateX(3px); opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .sb-chev { animation: none; opacity: 0.8; } }
@@ -113,9 +115,12 @@ nothing until they meet.
       <text x="0" y="82" class="sb-cap">body</text>
     </g>
     <g transform="translate(545,54)">
-      <path d="M4 44 L22 18 H82 L100 44 Z" class="sb-good"/>
-      <rect x="0" y="44" width="104" height="14" rx="5" class="sb-good"/>
-      <circle cx="24" cy="66" r="12" class="sb-wheel"/><circle cx="82" cy="66" r="12" class="sb-wheel"/>
+      <path class="sb-good" d="M4 50 Q4 40 9 39 L28 36 L38 20 Q41 15 48 15 L72 15 Q79 15 83 21 L94 37 L100 39 Q104 41 104 46 L104 50 Q104 54 99 54 L6 54 Q4 54 4 50 Z"/>
+      <path class="sb-glass" d="M39 34 L45 21 L51 21 L51 34 Z"/>
+      <path class="sb-glass" d="M55 34 L55 21 L72 21 Q77 21 80 26 L84 34 Z"/>
+      <circle cx="27" cy="55" r="11" class="sb-wheel"/><circle cx="27" cy="55" r="4.4" class="sb-hub"/>
+      <circle cx="82" cy="55" r="11" class="sb-wheel"/><circle cx="82" cy="55" r="4.4" class="sb-hub"/>
+      <circle cx="101" cy="45" r="2.3" class="sb-hub"/>
       <text x="0" y="96" class="sb-cap">car — first feedback, month 18</text>
     </g>
     <g class="sb-chev"><path d="M0 -7 L7 0 L0 7" transform="translate(150,94)"/></g>
@@ -142,9 +147,12 @@ nothing until they meet.
       <text x="0" y="82" class="sb-cap">bicycle</text>
     </g>
     <g transform="translate(545,238)">
-      <path d="M4 44 L22 18 H82 L100 44 Z" class="sb-good"/>
-      <rect x="0" y="44" width="104" height="14" rx="5" class="sb-good"/>
-      <circle cx="24" cy="66" r="12" class="sb-wheel"/><circle cx="82" cy="66" r="12" class="sb-wheel"/>
+      <path class="sb-good" d="M4 50 Q4 40 9 39 L28 36 L38 20 Q41 15 48 15 L72 15 Q79 15 83 21 L94 37 L100 39 Q104 41 104 46 L104 50 Q104 54 99 54 L6 54 Q4 54 4 50 Z"/>
+      <path class="sb-glass" d="M39 34 L45 21 L51 21 L51 34 Z"/>
+      <path class="sb-glass" d="M55 34 L55 21 L72 21 Q77 21 80 26 L84 34 Z"/>
+      <circle cx="27" cy="55" r="11" class="sb-wheel"/><circle cx="27" cy="55" r="4.4" class="sb-hub"/>
+      <circle cx="82" cy="55" r="11" class="sb-wheel"/><circle cx="82" cy="55" r="4.4" class="sb-hub"/>
+      <circle cx="101" cy="45" r="2.3" class="sb-hub"/>
       <text x="0" y="96" class="sb-cap">car — feedback since week 2</text>
     </g>
     <g class="sb-chev"><path d="M0 -7 L7 0 L0 7" transform="translate(150,288)"/></g>
