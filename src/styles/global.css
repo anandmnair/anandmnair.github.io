@@ -405,7 +405,7 @@ blockquote {
 .prose tbody tr:last-child td { border-bottom: 0; }
 .prose td strong { color: var(--ink); }
 
-/* Diagrams are ink-on-paper artwork, so they keep a light sheet in both themes. */
+/* Raster figures (screenshots) keep a light sheet in both themes. */
 .prose img {
   display: block;
   width: 100%;
@@ -414,6 +414,18 @@ blockquote {
   border-radius: var(--radius-lg);
   padding: var(--space-3);
   margin-block: var(--space-4);
+}
+
+/* Inline SVG diagrams are theme-aware — no sheet, they sit on the page. */
+.prose .diagram {
+  margin: var(--space-4) 0;
+}
+.prose .diagram svg {
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+  margin-inline: auto;
 }
 
 .prose h2 {
